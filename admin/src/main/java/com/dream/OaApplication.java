@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author dream
  */
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
-
 public class OaApplication
 {
     public static void main(String[] args)
