@@ -1,6 +1,7 @@
 package com.dream.web.controller.deploy;
 
 
+import com.dream.common.core.domain.AjaxResult;
 import com.dream.deploy.domain.ProcessDeploy;
 import com.dream.deploy.service.ProcessDeployService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,53 +16,55 @@ public class ProcessDeployController {
     @Autowired
     ProcessDeployService processDeployService;
 
-    @GetMapping("test/1")
-    public List<ProcessDeploy> stud(){
+    @GetMapping("test/select")
+    public AjaxResult stud(){
         //查询全部
         List<ProcessDeploy> list = processDeployService.list();
-        return list;
-
-
+        return AjaxResult.success(list);
     }
-//
-//    @GetMapping("test/2")
-//    public boolean app(){
-//        //添加
-//        ProcessDeploy entity = new ProcessDeploy("");
-//        entity.setUpdateTime(LocalDateTime.now(""));
-//        entity.setCreateTime(LocalDateTime.now(""));
-//        entity.setProcessDeployer("bbh");
-//        entity.setProcessTime(LocalDateTime.now());
-//        entity.setProcessState("");
-//        entity.setProcessZip("");
-//        entity.setProcessName("");
-//        entity.setProcessId("");
-////        boolean insert =entity.insert();
-//        boolean save = processDeployService.save(entity);
-//        return save;
-//    }
-//
-//    @GetMapping("test/3")
-//    public boolean update(){
-//        //修改
-//        ProcessDeploy entity = new ProcessDeploy();
-//        entity.setSsex("女");
-//        entity.setSage("2000");
-//        entity.setSname("yyy");
-////        entity.setSID("09");
-////        boolean insert =entity.insert();
-//        boolean save = processDeployService.save(entity);
-//        System.out.println(entity);
-//        //修改
+
+    @GetMapping("test/add")
+    public boolean app(){
+        //添加
+        ProcessDeploy entity = new ProcessDeploy();
+        entity.setUpdateTime(LocalDateTime.now());
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setProcessDeployer("52");
+        entity.setProcessTime(LocalDateTime.now());
+        entity.setProcessState("1100");
+        entity.setProcessZip("1100");
+        entity.setProcessName("101");
+        entity.setProcessId(2);
+//        boolean insert =entity.insert();
+        boolean save = processDeployService.save(entity);
+        return save;
+    }
+
+    @GetMapping("test/0")
+    public boolean update(){
+        //修改
+        ProcessDeploy entity = new ProcessDeploy();
+        entity.setUpdateTime(LocalDateTime.now());
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setProcessDeployer("bbh");
+        entity.setProcessTime(LocalDateTime.now());
+        entity.setProcessState("552225");
+        entity.setProcessZip("552225");
+        entity.setProcessName("552225");
+        entity.setProcessId(5);
+//        boolean insert =entity.insert();
+        boolean save = processDeployService.updateById(entity);
+        System.out.println(entity);
+        //修改
 //        boolean b1 = entity.updateById();
-//        return save;
-//    }
-//
-//    @GetMapping("test/4")
-//    public boolean delete(){
-//        //删除
-//        boolean b = processDeployService.removeById(10);
-//        return b;
-//    }
+        return save;
+    }
+
+    @GetMapping("test/delete")
+    public boolean delete(){
+        //删除
+        boolean b = processDeployService.removeById(4);
+        return b;
+    }
 
 }
