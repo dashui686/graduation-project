@@ -50,4 +50,11 @@ public class ActController {
 
         return AjaxResult.success(list);
     }
+
+    @GetMapping("/test/2")
+    public String test2(){
+
+        return "123";
+    }
+
 }
