@@ -108,11 +108,21 @@ token:
     # 令牌有效期（默认30分钟）
     expireTime: 240
   
-# MyBatis配置
-mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.dream.**.domain
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+## MyBatis配置
+#mybatis:
+#    # 搜索指定包别名
+#    typeAliasesPackage: com.dream.**.domain
+#    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#    mapperLocations: classpath*:mapper/**/*Mapper.xml
+#    # 加载全局的配置文件
+#    configLocation: classpath:mybatis/mybatis-config.xml
+
+
+mybatis-plus:
+  type-aliases-package: com.dream.**.domain
+  configuration:
+    auto-mapping-behavior: full # NONE 表示关闭自动映射；PARTIAL 只会自动映射没有定义嵌套结果映射的字段。 FULL 会自动映射任何复杂的结果集（无论是否嵌套）
+#    map-underscore-to-camel-case: true #驼峰命名
     mapperLocations: classpath*:mapper/**/*Mapper.xml
     # 加载全局的配置文件
     configLocation: classpath:mybatis/mybatis-config.xml

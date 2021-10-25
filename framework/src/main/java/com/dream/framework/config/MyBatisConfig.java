@@ -29,7 +29,8 @@ import com.dream.common.utils.StringUtils;
  * 
  * @author dream
  */
-@Configuration
+
+
 public class MyBatisConfig
 {
     @Autowired
