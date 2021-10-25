@@ -1,7 +1,7 @@
 package com.dream.deploy.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dream.deploy.domain.ProcessDeploy;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
 * @Entity com.dream.deploy.domain.ProcessDeploy

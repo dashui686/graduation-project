@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ruoyi-generator</artifactId>
+    <artifactId>generator</artifactId>
 
     <description>
         generator代码生成

@@ -78,13 +78,13 @@
         <!-- 代码生成-->
         <dependency>
             <groupId>com.dream</groupId>
-            <artifactId>ruoyi-generator</artifactId>
+            <artifactId>generator</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>com.dream</groupId>
             <artifactId>deploy</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>

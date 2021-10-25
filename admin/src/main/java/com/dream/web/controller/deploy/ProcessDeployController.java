@@ -23,45 +23,45 @@ public class ProcessDeployController {
 
 
     }
-
-    @GetMapping("test/2")
-    public boolean app(){
-        //添加
-        ProcessDeploy entity = new ProcessDeploy("");
-        entity.setUpdateTime(LocalDateTime.now(""));
-        entity.setCreateTime(LocalDateTime.now(""));
-        entity.setProcessDeployer("bbh");
-        entity.setProcessTime(LocalDateTime.now());
-        entity.setProcessState("");
-        entity.setProcessZip("");
-        entity.setProcessName("");
-        entity.setProcessId("");
-//        boolean insert =entity.insert();
-        boolean save = processDeployService.save(entity);
-        return save;
-    }
-
-    @GetMapping("test/3")
-    public boolean update(){
-        //修改
-        ProcessDeploy entity = new ProcessDeploy();
-        entity.setSsex("女");
-        entity.setSage("2000");
-        entity.setSname("yyy");
-//        entity.setSID("09");
-//        boolean insert =entity.insert();
-        boolean save = processDeployService.save(entity);
-        System.out.println(entity);
-        //修改
-        boolean b1 = entity.updateById();
-        return save;
-    }
-
-    @GetMapping("test/4")
-    public boolean delete(){
-        //删除
-        boolean b = processDeployService.removeById(10);
-        return b;
-    }
+//
+//    @GetMapping("test/2")
+//    public boolean app(){
+//        //添加
+//        ProcessDeploy entity = new ProcessDeploy("");
+//        entity.setUpdateTime(LocalDateTime.now(""));
+//        entity.setCreateTime(LocalDateTime.now(""));
+//        entity.setProcessDeployer("bbh");
+//        entity.setProcessTime(LocalDateTime.now());
+//        entity.setProcessState("");
+//        entity.setProcessZip("");
+//        entity.setProcessName("");
+//        entity.setProcessId("");
+////        boolean insert =entity.insert();
+//        boolean save = processDeployService.save(entity);
+//        return save;
+//    }
+//
+//    @GetMapping("test/3")
+//    public boolean update(){
+//        //修改
+//        ProcessDeploy entity = new ProcessDeploy();
+//        entity.setSsex("女");
+//        entity.setSage("2000");
+//        entity.setSname("yyy");
+////        entity.setSID("09");
+////        boolean insert =entity.insert();
+//        boolean save = processDeployService.save(entity);
+//        System.out.println(entity);
+//        //修改
+//        boolean b1 = entity.updateById();
+//        return save;
+//    }
+//
+//    @GetMapping("test/4")
+//    public boolean delete(){
+//        //删除
+//        boolean b = processDeployService.removeById(10);
+//        return b;
+//    }
 
 }
