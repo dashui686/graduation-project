@@ -16,14 +16,14 @@ public class ProcessDeployController {
     @Autowired
     ProcessDeployService processDeployService;
 
-    @GetMapping("test/select")
+    @GetMapping("/test/select")
     public AjaxResult stud(){
         //查询全部
         List<ProcessDeploy> list = processDeployService.list();
         return AjaxResult.success(list);
     }
 
-    @GetMapping("test/add")
+    @GetMapping("/test/add")
     public boolean app(){
         //添加
         ProcessDeploy entity = new ProcessDeploy();
@@ -40,7 +40,7 @@ public class ProcessDeployController {
         return save;
     }
 
-    @GetMapping("test/0")
+    @GetMapping("/test/0")
     public boolean update(){
         //修改
         ProcessDeploy entity = new ProcessDeploy();
@@ -60,7 +60,7 @@ public class ProcessDeployController {
         return save;
     }
 
-    @GetMapping("test/delete")
+    @GetMapping("/test/delete")
     public boolean delete(){
         //删除
         boolean b = processDeployService.removeById(4);
