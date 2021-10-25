@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.deploy.mapper.ProcessDeployMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.deploy.domain.ProcessDeploy">
+            <id property="processId" column="process_id" jdbcType="INTEGER"/>
+            <result property="processName" column="process_name" jdbcType="VARCHAR"/>
+            <result property="processZip" column="process_zip" jdbcType="VARCHAR"/>
+            <result property="processState" column="process_state" jdbcType="VARCHAR"/>
+            <result property="processTime" column="process_time" jdbcType="TIMESTAMP"/>
+            <result property="processDeployer" column="process_deployer" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        process_id,process_name,process_zip,
+        process_state,process_time,process_deployer,
+        create_time,update_time
+    </sql>
+</mapper>
