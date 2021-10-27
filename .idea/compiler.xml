@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common" />
+        <module name="quartz" />
+        <module name="admin" />
+        <module name="system" />
+        <module name="framework" />
+        <module name="deploy" />
+        <module name="generator" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="admin" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="deploy" target="1.8" />
+      <module name="framework" target="1.8" />
+      <module name="generator" target="1.8" />
+      <module name="oa" target="1.8" />
+      <module name="quartz" target="1.8" />
+      <module name="system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
