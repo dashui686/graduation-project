@@ -2,11 +2,19 @@ import request from '@/utils/request'
 
 
 
-// 登录方法
-export function list() {
+// 查询所有 参数
+export function listProcess(query) {
     return request({
-      url: '/login',
-      method: 'post',
-      data: data
+      url: '/test/processDeploy/select',
+      method: 'get',
+      params: query
     })
-  }
+}
+
+// 查询岗位详细
+export function getProcessDeploy(processId) {
+  return request({
+    url: '/test/processDeploy/' + processId,
+    method: 'get'
+  })
+}

@@ -29,7 +29,9 @@ import com.dream.system.service.ISysPostService;
  */
 @RestController
 @RequestMapping("/system/post")
-public class SysPostController extends BaseController
+public class
+
+SysPostController extends BaseController
 {
     @Autowired
     private ISysPostService postService;

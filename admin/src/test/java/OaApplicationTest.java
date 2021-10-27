@@ -23,7 +23,7 @@ public class OaApplicationTest {
 
     @Test
     public void test(){
-        System.out.println(1);
+        System.out.println("".isEmpty());
 //        System.out.println(repositoryService);
     }
 

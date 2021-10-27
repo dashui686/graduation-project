@@ -8,7 +8,7 @@
             <id property="processId" column="ProcessId" jdbcType="INTEGER"/>
             <result property="processName" column="ProcessName" jdbcType="VARCHAR"/>
             <result property="processZip" column="ProcessZip" jdbcType="VARCHAR"/>
-            <result property="processState" column="ProcessState" jdbcType="VARCHAR"/>
+            <result property="processState" column="ProcessState" jdbcType="CHAR"/>
             <result property="processTime" column="ProcessTime" jdbcType="TIMESTAMP"/>
             <result property="processDeployer" column="ProcessDeployer" jdbcType="VARCHAR"/>
             <result property="createTime" column="CreateTime" jdbcType="TIMESTAMP"/>

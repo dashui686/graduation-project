@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="流程名称" prop="ProcessName">
+      <el-form-item label="流程名称" prop="processName">
         <el-input
-          v-model="queryParams.postName"
+          v-model="queryParams.processName"
           placeholder="请输入流程名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="部署状态" prop="ProcessState">
-        <el-select v-model="queryParams.status" placeholder="部署状态" clearable size="small">
+      <el-form-item label="部署状态" prop="processState">
+        <el-select v-model="queryParams.processState" placeholder="部署状态" clearable size="small">
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -75,13 +75,17 @@
 
     <el-table v-loading="loading" :data="postList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="岗位编号" align="center" prop="postId" />
-      <el-table-column label="岗位编码" align="center" prop="postCode" />
-      <el-table-column label="岗位名称" align="center" prop="postName" />
-      <el-table-column label="岗位排序" align="center" prop="postSort" />
+      <el-table-column label="流程名称" align="center" prop="processName" />
+      <el-table-column label="流程状态" align="center" prop="processState" />
+      <el-table-column label="部署时间" align="center" prop="processTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.processTime) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="路径" align="center" prop="processZip" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.processState"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -119,27 +123,12 @@
 
     <!-- 添加或修改岗位对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="岗位名称" prop="postName">
-          <el-input v-model="form.postName" placeholder="请输入岗位名称" />
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="流程名称" prop="processName">
+          <el-input v-model="form.processName" placeholder="请输入流程名称" />
         </el-form-item>
-        <el-form-item label="岗位编码" prop="postCode">
-          <el-input v-model="form.postCode" placeholder="请输入编码名称" />
-        </el-form-item>
-        <el-form-item label="岗位顺序" prop="postSort">
-          <el-input-number v-model="form.postSort" controls-position="right" :min="0" />
-        </el-form-item>
-        <el-form-item label="岗位状态" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio
-              v-for="dict in dict.type.sys_normal_disable"
-              :key="dict.value"
-              :label="dict.value"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="流程Zip名" prop="processZip">
+          <el-input v-model="form.processZip" placeholder="请输入流程Zip名" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -151,7 +140,7 @@
 </template>
 
 <script>
-import { listPost, getPost, delPost, addPost, updatePost, exportPost } from "@/api/system/post";
+import { listProcess,getProcessDeploy } from "@/api/process/process.js";
 
 export default {
   name: "Post",
@@ -182,22 +171,18 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        postCode: undefined,
-        postName: undefined,
-        status: undefined
+        processName: undefined,
+        processState: undefined
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        postName: [
-          { required: true, message: "岗位名称不能为空", trigger: "blur" }
+        processName: [
+          { required: true, message: "流程名称不能为空", trigger: "blur" }
         ],
-        postCode: [
-          { required: true, message: "岗位编码不能为空", trigger: "blur" }
-        ],
-        postSort: [
-          { required: true, message: "岗位顺序不能为空", trigger: "blur" }
+        processZip: [
+          { required: true, message: "流程路径不能为空", trigger: "blur" }
         ]
       }
     };
@@ -209,11 +194,17 @@ export default {
     /** 查询岗位列表 */
     getList() {
       this.loading = true;
-      listPost(this.queryParams).then(response => {
-        this.postList = response.rows;
-        this.total = response.total;
+      listProcess(this.queryParams).then(res =>{
+        console.log(res)
+        this.postList = res.data.records;
+        this.total = res.data.total;
         this.loading = false;
-      });
+      })
+      // listPost(this.queryParams).then(response => {
+      //   this.postList = response.rows;
+      //   this.total = response.total;
+      //   this.loading = false;
+      // });
     },
     // 取消按钮
     cancel() {
@@ -223,12 +214,9 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        postId: undefined,
-        postCode: undefined,
-        postName: undefined,
-        postSort: 0,
-        status: "0",
-        remark: undefined
+        processId: undefined,
+        processName: undefined,
+        processZip: undefined
       };
       this.resetForm("form");
     },
@@ -257,11 +245,11 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const postId = row.postId || this.ids
-      getPost(postId).then(response => {
+      const postId = row.processId || this.ids
+      getProcessDeploy(postId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改岗位";
+        this.title = "修改流程";
       });
     },
     /** 提交按钮 */

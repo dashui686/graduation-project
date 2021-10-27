@@ -1,14 +1,25 @@
 package com.dream.web.controller.deploy;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dream.common.annotation.Log;
+import com.dream.common.constant.UserConstants;
 import com.dream.common.core.domain.AjaxResult;
+import com.dream.common.core.page.PageDomain;
+import com.dream.common.core.page.TableSupport;
+import com.dream.common.enums.BusinessType;
 import com.dream.deploy.domain.ProcessDeploy;
 import com.dream.deploy.service.ProcessDeployService;
+import com.dream.system.domain.SysPost;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.events.Event;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -16,55 +27,63 @@ public class ProcessDeployController {
     @Autowired
     ProcessDeployService processDeployService;
 
-    @GetMapping("/test/select")
-    public AjaxResult stud(){
+    @GetMapping("/test/processDeploy/select")
+    public AjaxResult select(ProcessDeploy processDeploy){
+        PageDomain pageDomain = TableSupport.buildPageRequest();
         //查询全部
-        List<ProcessDeploy> list = processDeployService.list();
-        return AjaxResult.success(list);
+        Page<ProcessDeploy> page = processDeployService
+                .page(
+                        new Page<ProcessDeploy>(pageDomain.getPageNum(), pageDomain.getPageSize()),
+                        new QueryWrapper<ProcessDeploy>()
+                                .eq(
+                                        processDeploy.getProcessName()!= null && !processDeploy.getProcessName().isEmpty(),
+                                        "ProcessName",processDeploy.getProcessName()
+                                )
+                                .eq(
+                                        processDeploy.getProcessState()!=null ,
+                                        "ProcessState",processDeploy.getProcessState()
+                                )
+                );
+        return AjaxResult.success(page);
     }
 
-    @GetMapping("/test/add")
-    public boolean app(){
-        //添加
-        ProcessDeploy entity = new ProcessDeploy();
-        entity.setUpdateTime(LocalDateTime.now());
-        entity.setCreateTime(LocalDateTime.now());
-        entity.setProcessDeployer("52");
-        entity.setProcessTime(LocalDateTime.now());
-        entity.setProcessState("1100");
-        entity.setProcessZip("1100");
-        entity.setProcessName("101");
-        entity.setProcessId(2);
-//        boolean insert =entity.insert();
-        boolean save = processDeployService.save(entity);
-        return save;
+    @GetMapping("/test/processDeploy/{id}")
+    public AjaxResult getOne(@PathVariable("id") Integer id){
+        ProcessDeploy byId = processDeployService.getById(id);
+        return AjaxResult.success(byId);
     }
 
-    @GetMapping("/test/0")
-    public boolean update(){
-        //修改
-        ProcessDeploy entity = new ProcessDeploy();
-        entity.setUpdateTime(LocalDateTime.now());
-        entity.setCreateTime(LocalDateTime.now());
-        entity.setProcessDeployer("bbh");
-        entity.setProcessTime(LocalDateTime.now());
-        entity.setProcessState("552225");
-        entity.setProcessZip("552225");
-        entity.setProcessName("552225");
-        entity.setProcessId(5);
-//        boolean insert =entity.insert();
-        boolean save = processDeployService.updateById(entity);
-        System.out.println(entity);
-        //修改
-//        boolean b1 = entity.updateById();
-        return save;
+    /**
+     * 新增岗位
+     */
+//    @PreAuthorize("@ss.hasPermi('system:post:add')")
+//    @Log(title = "管理", businessType = BusinessType.INSERT)
+    @PostMapping("/")
+    public AjaxResult add(@Validated @RequestBody ProcessDeploy processDeploy)
+    {
+        System.out.println(processDeploy);
+        return AjaxResult.toAjax(true,"123");
     }
 
-    @GetMapping("/test/delete")
-    public boolean delete(){
-        //删除
-        boolean b = processDeployService.removeById(4);
-        return b;
+    /**
+     * 修改岗位
+     */
+//    @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@Validated @RequestBody SysPost post)
+    {
+        return AjaxResult.toAjax(true,"!23");
+    }
+
+    /**
+     * 删除岗位
+     */
+    @PreAuthorize("@ss.hasPermi('system:post:remove')")
+    @Log(title = "岗位管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{postIds}")
+    public AjaxResult remove(@PathVariable Long[] postIds)
+    {
+        return AjaxResult.toAjax(true,"!23");
     }
 
 }

@@ -145,4 +145,26 @@ public class AjaxResult extends HashMap<String, Object>
     {
         return new AjaxResult(code, msg, null);
     }
+
+    /**
+     * 判断返回消息
+     * @param condition 判断
+     * @param msg   返回消息
+     * @param data  数据
+     * @return  消息
+     */
+    public static AjaxResult toAjax(boolean condition, String msg,Object data)
+    {
+        return condition? AjaxResult.success(msg,data):AjaxResult.error(msg,data);
+    }
+
+    public static AjaxResult toAjax(boolean condition, String msg)
+    {
+        return condition? AjaxResult.success(msg):AjaxResult.error(msg);
+    }
+
+    public static AjaxResult toAjax(boolean condition,Object data)
+    {
+        return condition? AjaxResult.success(data):AjaxResult.error("error",data);
+    }
 }
