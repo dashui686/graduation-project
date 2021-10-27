@@ -232,7 +232,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.postId)
+      this.ids = selection.map(item => item.processId)
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
