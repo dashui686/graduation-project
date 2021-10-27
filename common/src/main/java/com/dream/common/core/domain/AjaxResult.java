@@ -163,6 +163,11 @@ public class AjaxResult extends HashMap<String, Object>
         return condition? AjaxResult.success(msg):AjaxResult.error(msg);
     }
 
+    public static AjaxResult toAjax(boolean condition)
+    {
+        return condition? AjaxResult.success():AjaxResult.error();
+    }
+
     public static AjaxResult toAjax(boolean condition,Object data)
     {
         return condition? AjaxResult.success(data):AjaxResult.error("error",data);

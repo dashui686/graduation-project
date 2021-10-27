@@ -11,10 +11,38 @@ export function listProcess(query) {
     })
 }
 
-// 查询岗位详细
+// 查询流程详细
 export function getProcessDeploy(processId) {
   return request({
     url: '/test/processDeploy/' + processId,
     method: 'get'
   })
 }
+
+
+// 新增岗位
+export function addProcessDeploy(data) {
+  return request({
+    url: '/test/processDeploy/',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改岗位
+export function updateProcessDeploy(data) {
+  return request({
+    url: '/test/processDeploy/',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除岗位
+export function delProcessDeploy(postId) {
+  return request({
+    url: '/test/processDeploy/' + postId,
+    method: 'delete'
+  })
+}
+

@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { listProcess,getProcessDeploy } from "@/api/process/process.js";
+import { listProcess,getProcessDeploy,addProcessDeploy,updateProcessDeploy,delProcessDeploy } from "@/api/process/process.js";
 
 export default {
   name: "Post",
@@ -256,14 +256,14 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.postId != undefined) {
-            updatePost(this.form).then(response => {
+          if (this.form.processId != undefined) {
+            updateProcessDeploy(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addPost(this.form).then(response => {
+            addProcessDeploy(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -274,9 +274,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const postIds = row.postId || this.ids;
+      const postIds = row.processId || this.ids;
       this.$modal.confirm('是否确认删除岗位编号为"' + postIds + '"的数据项？').then(function() {
-        return delPost(postIds);
+        return delProcessDeploy(postIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
