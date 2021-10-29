@@ -1,10 +1,10 @@
 package com.dream.web.controller.business;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dream.common.core.domain.AjaxResult;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import com.dream.deploy.domain.ProcessDeploy;
+import com.dream.deploy.service.ProcessDeployService;
+import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,8 @@ import java.util.List;
 
 @RestController
 public class ActController {
+
+
 
     /**
      * 仓库
@@ -41,6 +43,8 @@ public class ActController {
     private HistoryService historyService;
 
 
+    @Autowired
+    ProcessDeployService processDeployService;
 
     @GetMapping("/test/1")
     public AjaxResult test(){
@@ -51,9 +55,19 @@ public class ActController {
         return AjaxResult.success(list);
     }
 
+
+    /**
+     * 删除所有流程
+     * @return
+     */
     @GetMapping("/test/2")
     public String test2(){
-
+        DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
+        List<Deployment> list = deploymentQuery.list();
+        for (Deployment deployment : list) {
+            repositoryService.deleteDeployment(deployment.getId());
+        }
+        processDeployService.update(new UpdateWrapper<ProcessDeploy>().set("ProcessState",1));
         return "123";
     }
 

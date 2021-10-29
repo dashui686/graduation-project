@@ -29,7 +29,7 @@ export function addProcessDeploy(data) {
   })
 }
 
-// 修改岗位
+// 修改流程
 export function updateProcessDeploy(data) {
   return request({
     url: '/test/processDeploy/',
@@ -38,11 +38,31 @@ export function updateProcessDeploy(data) {
   })
 }
 
-// 删除岗位
+// 删除流程
 export function delProcessDeploy(postId) {
   return request({
     url: '/test/processDeploy/' + postId,
     method: 'delete'
   })
 }
+
+// 部署流程
+export function deploy(postId) {
+  return request({
+    url: '/test/processDeploy/deploy',
+    method: 'post',
+    data: {processId:postId}
+  })
+}
+
+// 取消部署流程
+export function unDeploy(postId) {
+  return request({
+    url: '/test/processDeploy/unDeploy',
+    method: 'post',
+    data: {processId:postId}
+  })
+}
+
+
 
