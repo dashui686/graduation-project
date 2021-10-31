@@ -231,7 +231,11 @@
                 <artifactId>common</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.dream</groupId>
+                <artifactId>drp</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -243,6 +247,7 @@
         <module>generator</module>
         <module>common</module>
         <module>deploy</module>
+        <module>drp</module>
     </modules>
     <packaging>pom</packaging>
 

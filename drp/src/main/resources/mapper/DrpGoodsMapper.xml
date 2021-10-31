@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.drp.mapper.DrpGoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.drp.domain.DrpGoods">
+            <id property="goodsId" column="GoodsId" jdbcType="INTEGER"/>
+            <result property="goodsName" column="GoodsName" jdbcType="VARCHAR"/>
+            <result property="goodsTypeId" column="GoodsTypeId" jdbcType="INTEGER"/>
+            <result property="goodsNo" column="GoodsNo" jdbcType="VARCHAR"/>
+            <result property="goodsModel" column="GoodsModel" jdbcType="VARCHAR"/>
+            <result property="goodsLocality" column="GoodsLocality" jdbcType="VARCHAR"/>
+            <result property="goodsUnit" column="GoodsUnit" jdbcType="VARCHAR"/>
+            <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+            <result property="updateDate" column="UpdateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        GoodsId,GoodsName,GoodsTypeId,
+        GoodsNo,GoodsModel,GoodsLocality,
+        GoodsUnit,CreateDate,UpdateDate
+    </sql>
+</mapper>

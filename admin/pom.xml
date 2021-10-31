@@ -87,6 +87,10 @@
             <artifactId>deploy</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dream</groupId>
+            <artifactId>drp</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
