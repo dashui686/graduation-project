@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="岗位编码" prop="warehouseId">
+      <el-form-item label="仓库ID" prop="warehouseId">
         <el-input
           v-model="queryParams.warehouseId"
-          placeholder="请输入岗位编码"
+          placeholder="请输入仓库ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="岗位名称" prop="warehouseName">
+      <el-form-item label="仓库名称" prop="warehouseName">
         <el-input
           v-model="queryParams.warehouseName"
-          placeholder="请输入岗位名称"
+          placeholder="请输入仓库名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

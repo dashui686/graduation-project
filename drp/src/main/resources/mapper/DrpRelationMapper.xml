@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.drp.mapper.DrpRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.drp.domain.DrpRelation">
+            <id property="id" column="Id" jdbcType="INTEGER"/>
+            <result property="name" column="Name" jdbcType="VARCHAR"/>
+            <result property="contacts" column="Contacts" jdbcType="VARCHAR"/>
+            <result property="contactsPoition" column="ContactsPoition" jdbcType="VARCHAR"/>
+            <result property="contactsPhone" column="ContactsPhone" jdbcType="VARCHAR"/>
+            <result property="address" column="Address" jdbcType="VARCHAR"/>
+            <result property="bankAccount" column="BankAccount" jdbcType="VARCHAR"/>
+            <result property="bankName" column="BankName" jdbcType="VARCHAR"/>
+            <result property="lasttradingDate" column="LasttradingDate" jdbcType="TIMESTAMP"/>
+            <result property="lasttradingMoney" column="LasttradingMoney" jdbcType="DECIMAL"/>
+            <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+            <result property="createUsers" column="CreateUsers" jdbcType="INTEGER"/>
+            <result property="updateDate" column="UpdateDate" jdbcType="TIMESTAMP"/>
+            <result property="updateUsers" column="UpdateUsers" jdbcType="INTEGER"/>
+            <result property="status" column="Status" jdbcType="INTEGER"/>
+            <result property="contactsDepartment" column="ContactsDepartment" jdbcType="VARCHAR"/>
+            <result property="type" column="Type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Id,Name,Contacts,
+        ContactsPoition,ContactsPhone,Address,
+        BankAccount,BankName,LasttradingDate,
+        LasttradingMoney,CreateDate,CreateUsers,
+        UpdateDate,UpdateUsers,Status,
+        ContactsDepartment,Type
+    </sql>
+</mapper>

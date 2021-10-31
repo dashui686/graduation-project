@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.drp.mapper.DrpGoodstypeMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.drp.domain.DrpGoodstype">
+            <id property="goodsTypeId" column="GoodsTypeId" jdbcType="INTEGER"/>
+            <result property="goodsTypeName" column="GoodsTypeName" jdbcType="VARCHAR"/>
+            <result property="goodsTypeDesc" column="GoodsTypeDesc" jdbcType="VARCHAR"/>
+            <result property="sort" column="Sort" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        GoodsTypeId,GoodsTypeName,GoodsTypeDesc,
+        Sort
+    </sql>
+</mapper>
