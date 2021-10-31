@@ -44,5 +44,5 @@ public interface DrpWarehouseService extends IService<DrpWarehouse> {
      * @param id
      * @return
      */
-    public AjaxResult remove(Integer[] id);
+    public AjaxResult removeIds(Long[] id);
 }

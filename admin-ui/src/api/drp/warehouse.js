@@ -12,36 +12,37 @@ export function listWarehouse(query) {
 }
 
 // 查询流程详细
-export function getProcessDeploy(processId) {
+export function getWarehouse(warehouseId) {
   return request({
-    url: '/test/processDeploy/' + processId,
+    url: '/test/drpWarehouse/' + warehouseId,
     method: 'get'
   })
 }
 
 
 // 新增岗位
-export function addProcessDeploy(data) {
+export function addWarehouse(data) {
   return request({
-    url: '/test/processDeploy/',
+    url: '/test/drpWarehouse/',
     method: 'post',
     data: data
   })
 }
 
 // 修改流程
-export function updateProcessDeploy(data) {
+export function updateWarehouse(data) {
+
   return request({
-    url: '/test/processDeploy/',
+    url: '/test/drpWarehouse/',
     method: 'put',
     data: data
   })
 }
 
 // 删除流程
-export function delProcessDeploy(postId) {
+export function delWarehouse(warehouseId) {
   return request({
-    url: '/test/processDeploy/' + postId,
+    url: '/test/drpWarehouse/delete/' + warehouseId,
     method: 'delete'
   })
 }

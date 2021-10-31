@@ -8,7 +8,10 @@ import com.dream.drp.domain.DrpGoods;
 import com.dream.drp.domain.DrpWarehouse;
 import com.dream.drp.service.DrpWarehouseService;
 import com.dream.drp.mapper.DrpWarehouseMapper;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  *
@@ -22,13 +25,13 @@ public class DrpWarehouseServiceImpl extends ServiceImpl<DrpWarehouseMapper, Drp
         Page<DrpWarehouse> page = page(
                 new Page<DrpWarehouse>(current, size),
                 new QueryWrapper<DrpWarehouse>()
-                        .eq(
+                        .like(
                                 drpWarehouse.getWarehouseName()!= null && !drpWarehouse.getWarehouseName().isEmpty(),
-                                "WarehouseName",drpWarehouse.getWarehouseName()
+                                "WarehouseName","%"+drpWarehouse.getWarehouseName()+"%"
                         )
                         .eq(
                                 drpWarehouse.getWarehouseId()!=null ,
-                               "ProcessState",drpWarehouse.getWarehouseId()!=null
+                               "WarehouseId",drpWarehouse.getWarehouseId()
                        )
         );
         return AjaxResult.success(page);
@@ -41,17 +44,19 @@ public class DrpWarehouseServiceImpl extends ServiceImpl<DrpWarehouseMapper, Drp
 
     @Override
     public AjaxResult add(DrpWarehouse drpWarehouse) {
-        return AjaxResult.success(add(drpWarehouse));
+        drpWarehouse.setCreateDate(LocalDateTime.now());
+        return AjaxResult.success(save(drpWarehouse));
     }
 
     @Override
     public AjaxResult edit(DrpWarehouse drpWarehouse) {
+        drpWarehouse.setUpdateDate(LocalDateTime.now());
         return AjaxResult.success(updateById(drpWarehouse));
     }
 
     @Override
-    public AjaxResult remove(Integer[] id) {
-        return AjaxResult.success(remove(id));
+    public AjaxResult removeIds(Long[] id) {
+        return AjaxResult.success(removeByIds(Collections.arrayToList(id)));
     }
 }
 

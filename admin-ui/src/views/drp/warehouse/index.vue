@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="岗位编码" prop="postCode">
+      <el-form-item label="岗位编码" prop="warehouseId">
         <el-input
-          v-model="queryParams.postCode"
+          v-model="queryParams.warehouseId"
           placeholder="请输入岗位编码"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="岗位名称" prop="postName">
+      <el-form-item label="岗位名称" prop="warehouseName">
         <el-input
-          v-model="queryParams.postName"
+          v-model="queryParams.warehouseName"
           placeholder="请输入岗位名称"
           clearable
           size="small"
@@ -119,26 +119,14 @@
     <!-- 添加或修改岗位对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="岗位名称" prop="postName">
-          <el-input v-model="form.postName" placeholder="请输入岗位名称" />
+        <el-form-item label="仓库名称" prop="warehouseName">
+          <el-input v-model="form.warehouseName" placeholder="请输入仓库名称" />
         </el-form-item>
-        <el-form-item label="岗位编码" prop="postCode">
-          <el-input v-model="form.postCode" placeholder="请输入编码名称" />
+        <el-form-item label="仓库描述" prop="warehouseDesc">
+          <el-input v-model="form.warehouseDesc" placeholder="请输入仓库描述" />
         </el-form-item>
-        <el-form-item label="岗位顺序" prop="postSort">
-          <el-input-number v-model="form.postSort" controls-position="right" :min="0" />
-        </el-form-item>
-        <el-form-item label="岗位状态" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio
-              v-for="dict in dict.type.sys_normal_disable"
-              :key="dict.value"
-              :label="dict.value"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="仓库排序" prop="sort">
+          <el-input-number v-model="form.sort" controls-position="right" :min="0" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -151,7 +139,7 @@
 
 <script>
   //import { listPost, getPost, delPost, addPost, updatePost, exportPost } from "@/api/system/post";
-  import { listWarehouse } from "@/api/drp/warehouse";
+  import { listWarehouse,addWarehouse,updateWarehouse,getWarehouse,delWarehouse} from "@/api/drp/warehouse";
 
   export default {
     name: "Post",
@@ -244,7 +232,7 @@
       },
       // 多选框选中数据
       handleSelectionChange(selection) {
-        this.ids = selection.map(item => item.postId)
+        this.ids = selection.map(item => item.warehouseId)
         this.single = selection.length!=1
         this.multiple = !selection.length
       },
@@ -257,9 +245,9 @@
       /** 修改按钮操作 */
       handleUpdate(row) {
         this.reset();
-        const postId = row.postId || this.ids
-        getPost(postId).then(response => {
-          this.form = response.data;
+        const postId = row.warehouseId || this.ids
+        getWarehouse(postId).then(response => {
+            this.form = response.data;
           this.open = true;
           this.title = "修改岗位";
         });
@@ -268,14 +256,14 @@
       submitForm: function() {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.postId != undefined) {
-              updatePost(this.form).then(response => {
+            if (this.form.warehouseId != undefined) {
+              updateWarehouse(this.form).then(response => {
                 this.$modal.msgSuccess("修改成功");
                 this.open = false;
                 this.getList();
               });
             } else {
-              addPost(this.form).then(response => {
+              addWarehouse(this.form).then(response => {
                 this.$modal.msgSuccess("新增成功");
                 this.open = false;
                 this.getList();
@@ -286,9 +274,10 @@
       },
       /** 删除按钮操作 */
       handleDelete(row) {
-        const postIds = row.postId || this.ids;
+        console.log(row)
+        const postIds = row.warehouseId || this.ids;
         this.$modal.confirm('是否确认删除岗位编号为"' + postIds + '"的数据项？').then(function() {
-          return delPost(postIds);
+          return delWarehouse(postIds);
         }).then(() => {
           this.getList();
           this.$modal.msgSuccess("删除成功");
