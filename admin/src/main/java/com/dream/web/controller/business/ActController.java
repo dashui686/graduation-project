@@ -9,6 +9,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -71,4 +72,11 @@ public class ActController {
         return "123";
     }
 
+
+
+
+    @PostMapping("/test/myLeave")
+    public String myLeave(){
+        return "1";
+    }
 }

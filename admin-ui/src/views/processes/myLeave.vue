@@ -1,28 +1,32 @@
 <template>
-  <div class="main">
+  <div class="continer">
+    <div class="inner">
     <el-form ref="leaveForm" :model="leaveFormData" :rules="rules" size="medium" label-width="100px">
-      <el-form-item label="申请人" prop="userId">
-        <el-input v-model="leaveFormData.userId" placeholder="请输入申请人申请人" :maxlength="11" show-word-limit
-          clearable prefix-icon='el-icon-user-solid' :style="{width: '100%'}"></el-input>
+      <el-form-item label="请假类型" prop="type">
+        <el-select v-model="leaveFormData.type" placeholder="请选择请假类型" clearable :style="{width: '100%'}">
+          <el-option v-for="(item, index) in typeOptions" :key="index" :label="item.label" :value="item.value"
+            :disabled="item.disabled"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="开始时间" prop="beginDateTime">
-        <el-time-picker v-model="leaveFormData.beginDateTime" format="HH:mm:ss" value-format="HH:mm:ss"
-          :picker-options='{"selectableRange":"00:00:00-23:59:59"}' :style="{width: '100%'}"
-          placeholder="请选择开始时间" clearable></el-time-picker>
+      <el-form-item label="开始时间" prop="beginDate">
+        <el-date-picker v-model="leaveFormData.beginDate"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+          :style="{width: '100%'}" placeholder="请选择开始时间" clearable></el-date-picker>
       </el-form-item>
-      <el-form-item label="开始时间" prop="endDateTime">
-        <el-time-picker v-model="leaveFormData.endDateTime" format="HH:mm:ss" value-format="HH:mm:ss"
-          :picker-options='{"selectableRange":"00:00:00-23:59:59"}' :style="{width: '100%'}"
-          placeholder="请选择开始时间" clearable></el-time-picker>
+      <el-form-item label="结束时间" prop="endDate">
+        <el-date-picker v-model="leaveFormData.endDate"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+          :style="{width: '100%'}" placeholder="请选择结束时间" clearable></el-date-picker>
       </el-form-item>
-      <el-form-item label="天数" prop="dayCount">
-        <el-input-number v-model="leaveFormData.dayCount" placeholder="天数" :step='1' :precision='2'
-          :disabled='true'></el-input-number>
+      <el-form-item label="时长(小时)" prop="countDay">
+        <el-input-number v-model="leaveFormData.countDay" disabled placeholder="时长(小时)" :step='1' :precision='2'>
+        </el-input-number>
       </el-form-item>
-      <el-form-item label="审批人" prop="field107">
-        <el-select v-model="leaveFormData.field107" placeholder="请选择审批人" filterable clearable
-          :style="{width: '100%'}">
-          <el-option v-for="(item, index) in field107Options" :key="index" :label="item.label"
+      <el-form-item label="请假理由" prop="reason">
+        <el-input v-model="leaveFormData.reason" type="textarea" placeholder="请输入请假理由"
+          :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
+      </el-form-item>
+      <el-form-item label="审批人" prop="assignee">
+        <el-select v-model="leaveFormData.assignee" placeholder="请选择审批人" clearable :style="{width: '100%'}">
+          <el-option v-for="(item, index) in assigneeOptions" :key="index" :label="item.label"
             :value="item.value" :disabled="item.disabled"></el-option>
         </el-select>
       </el-form-item>
@@ -31,54 +35,67 @@
         <el-button @click="resetForm">重置</el-button>
       </el-form-item>
     </el-form>
+    </div>
   </div>
 </template>
 <script>
 export default {
-  name: "myLeave",
+  name:"myLeave",
   components: {},
   props: [],
   data() {
     return {
       leaveFormData: {
-        userId: undefined,
-        beginDateTime: "09:14:13",
-        endDateTime: "09:14:03",
-        dayCount: 0,
-        field107: undefined,
+        type: undefined,
+        beginDate: null,
+        endDate: null,
+        countDay: 0,
+        reason: undefined,
+        assignee: undefined,
       },
       rules: {
-        userId: [{
+        type: [{
           required: true,
-          message: '请输入申请人申请人',
-          trigger: 'blur'
-        }, {
-          pattern: /^1(3|4|5|7|8|9)\d{9}$/,
-          message: '手机号格式错误',
-          trigger: 'blur'
+          message: '请选择请假类型',
+          trigger: 'change'
         }],
-        beginDateTime: [{
+        beginDate: [{
           required: true,
           message: '请选择开始时间',
           trigger: 'change'
         }],
-        endDateTime: [{
+        endDate: [{
           required: true,
-          message: '请选择开始时间',
+          message: '请选择结束时间',
           trigger: 'change'
         }],
-        dayCount: [{
+        countDay: [{
           required: true,
-          message: '天数',
+          message: '时长(小时)',
           trigger: 'blur'
         }],
-        field107: [{
+        reason: [{
+          required: true,
+          message: '请输入请假理由',
+          trigger: 'blur'
+        }],
+        assignee: [{
           required: true,
           message: '请选择审批人',
           trigger: 'change'
         }],
       },
-      field107Options: [{
+      typeOptions: [{
+        "label": "事假",
+        "value": "事假"
+      }, {
+        "label": "病假",
+        "value": "病假"
+      }, {
+        "label": "公干",
+        "value": "公干"
+      }],
+      assigneeOptions: [{
         "label": "选项一",
         "value": 1
       }, {
@@ -106,9 +123,12 @@ export default {
 
 </script>
 <style scoped>
-.main{
+.continer{
   width: 100%;
-  margin:  0 auto ;
-  border: 1px solid red;
+}
+.inner{
+
+  width: 50%;
+  margin: 100px auto 0 auto;
 }
 </style>
