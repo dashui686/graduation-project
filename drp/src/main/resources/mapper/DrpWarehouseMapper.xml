@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.drp.mapper.DrpWarehouseMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.drp.domain.DrpWarehouse">
+            <id property="warehouseId" column="WarehouseId" jdbcType="INTEGER"/>
+            <result property="warehouseName" column="WarehouseName" jdbcType="VARCHAR"/>
+            <result property="warehouseDesc" column="WarehouseDesc" jdbcType="VARCHAR"/>
+            <result property="sort" column="Sort" jdbcType="INTEGER"/>
+            <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+            <result property="updateDate" column="UpdateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        WarehouseId,WarehouseName,WarehouseDesc,
+        Sort,CreateDate,UpdateDate
+    </sql>
+</mapper>

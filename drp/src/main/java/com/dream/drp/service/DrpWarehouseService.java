@@ -2,19 +2,22 @@ package com.dream.drp.service;
 
 import com.dream.common.core.domain.AjaxResult;
 import com.dream.drp.domain.DrpGoods;
+import com.dream.drp.domain.DrpWarehouse;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
  */
-public interface DrpGoodsService extends IService<DrpGoods> {
+public interface DrpWarehouseService extends IService<DrpWarehouse> {
+
     /**
-     * 查询全部
-     * @param drpGoods   条件参数
-     * @return 数据集合
+     *      查询全部
+     * @param drpWarehouse  条件参数
+     * @param current       条件参数
+     * @param size          条件参数
+     * @return
      */
-    public AjaxResult select(DrpGoods drpGoods,Integer current,Integer size);
+    public AjaxResult select(DrpWarehouse drpWarehouse, Integer current, Integer size);
 
     /**
      * 根据ID查询
@@ -27,14 +30,14 @@ public interface DrpGoodsService extends IService<DrpGoods> {
      * 添加
      * @return
      */
-    public AjaxResult add(DrpGoods drpGoods);
+    public AjaxResult add(DrpWarehouse drpWarehouse);
 
     /**
      * 修改
-     * @param drpGoods
+     * @param drpWarehouse
      * @return
      */
-    public AjaxResult edit(DrpGoods drpGoods);
+    public AjaxResult edit(DrpWarehouse drpWarehouse);
 
     /**
      *  删除
@@ -42,5 +45,4 @@ public interface DrpGoodsService extends IService<DrpGoods> {
      * @return
      */
     public AjaxResult remove(Integer[] id);
-
 }
