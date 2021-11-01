@@ -11,6 +11,14 @@ export function listWarehouse(query) {
   })
 }
 
+// 查询树形值
+export function treeselect() {
+  return request({
+    url: '/test/drpWarehouse/treeselect',
+    method: 'get'
+  })
+}
+
 // 查询流程详细
 export function getWarehouse(warehouseId) {
   return request({

@@ -11,7 +11,7 @@ export function listGoodsType(query) {
   })
 }
 
-// 查询供应商
+// 查询商品类型
 export function getOne(id) {
   return request({
     url: '/test/goodsType/' + id,
@@ -20,7 +20,7 @@ export function getOne(id) {
 }
 
 
-// 新增供应商
+// 新增商品类型
 export function addGoodsType(data) {
   return request({
     url: '/test/goodsType/',
@@ -29,7 +29,7 @@ export function addGoodsType(data) {
   })
 }
 
-// 修改供应商
+// 修改商品类型
 export function updateGoodsType(data) {
 
   return request({
@@ -39,7 +39,7 @@ export function updateGoodsType(data) {
   })
 }
 
-// 删除供应商
+// 删除商品类型
 export function delGoodsType(id) {
   return request({
     url: '/test/goodsType/delete/' + id,

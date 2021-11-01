@@ -40,12 +40,6 @@ public class DrpGoods implements Serializable {
     private String goodsNo;
 
     /**
-     * 商品型号
-     */
-    @TableField(value = "GoodsModel")
-    private String goodsModel;
-
-    /**
      * 商品产地
      */
     @TableField(value = "GoodsLocality")
@@ -88,7 +82,6 @@ public class DrpGoods implements Serializable {
             && (this.getGoodsName() == null ? other.getGoodsName() == null : this.getGoodsName().equals(other.getGoodsName()))
             && (this.getGoodsTypeId() == null ? other.getGoodsTypeId() == null : this.getGoodsTypeId().equals(other.getGoodsTypeId()))
             && (this.getGoodsNo() == null ? other.getGoodsNo() == null : this.getGoodsNo().equals(other.getGoodsNo()))
-            && (this.getGoodsModel() == null ? other.getGoodsModel() == null : this.getGoodsModel().equals(other.getGoodsModel()))
             && (this.getGoodsLocality() == null ? other.getGoodsLocality() == null : this.getGoodsLocality().equals(other.getGoodsLocality()))
             && (this.getGoodsUnit() == null ? other.getGoodsUnit() == null : this.getGoodsUnit().equals(other.getGoodsUnit()))
             && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
@@ -103,7 +96,6 @@ public class DrpGoods implements Serializable {
         result = prime * result + ((getGoodsName() == null) ? 0 : getGoodsName().hashCode());
         result = prime * result + ((getGoodsTypeId() == null) ? 0 : getGoodsTypeId().hashCode());
         result = prime * result + ((getGoodsNo() == null) ? 0 : getGoodsNo().hashCode());
-        result = prime * result + ((getGoodsModel() == null) ? 0 : getGoodsModel().hashCode());
         result = prime * result + ((getGoodsLocality() == null) ? 0 : getGoodsLocality().hashCode());
         result = prime * result + ((getGoodsUnit() == null) ? 0 : getGoodsUnit().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
@@ -121,7 +113,6 @@ public class DrpGoods implements Serializable {
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsTypeId=").append(goodsTypeId);
         sb.append(", goodsNo=").append(goodsNo);
-        sb.append(", goodsModel=").append(goodsModel);
         sb.append(", goodsLocality=").append(goodsLocality);
         sb.append(", goodsUnit=").append(goodsUnit);
         sb.append(", createDate=").append(createDate);
