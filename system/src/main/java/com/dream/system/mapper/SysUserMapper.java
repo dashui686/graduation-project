@@ -1,6 +1,9 @@
 package com.dream.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import com.dream.common.core.domain.entity.SysUser;
 
@@ -43,6 +46,13 @@ public interface SysUserMapper
      */
     public SysUser selectUserByUserName(String userName);
 
+    /**
+     * 查询用户键值对
+     *
+     * @return 用户对象信息
+     */
+    @MapKey("value")
+    public List<Map<String,String>> selectUserByOptions();
     /**
      * 通过用户ID查询用户
      * 

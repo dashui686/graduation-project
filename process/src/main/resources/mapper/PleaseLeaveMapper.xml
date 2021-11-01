@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.process.mapper.PleaseLeaveMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.process.domain.PleaseLeave">
+            <id property="id" column="Id" jdbcType="INTEGER"/>
+            <result property="userId" column="UserId" jdbcType="INTEGER"/>
+            <result property="deptId" column="DeptId" jdbcType="INTEGER"/>
+            <result property="beginDate" column="BeginDate" jdbcType="TIMESTAMP"/>
+            <result property="endDate" column="EndDate" jdbcType="TIMESTAMP"/>
+            <result property="duration" column="Duration" jdbcType="DECIMAL"/>
+            <result property="type" column="Type" jdbcType="VARCHAR"/>
+            <result property="reason" column="Reason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Id,UserId,DeptId,
+        BeginDate,EndDate,Duration,
+        Type,Reason
+    </sql>
+</mapper>

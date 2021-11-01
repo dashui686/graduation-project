@@ -1,6 +1,7 @@
 package com.dream.web.controller.system;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,17 @@ public class SysUserController extends BaseController
         startPage();
         List<SysUser> list = userService.selectUserList(user);
         return getDataTable(list);
+    }
+
+    /**
+     * 获取用户列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:user:listByOption')")
+    @GetMapping("/listByOption")
+    public AjaxResult listByOption(SysUser user)
+    {
+        List<Map<String, String>> maps = userService.selectUserByOptions();
+        return AjaxResult.toAjax(maps!=null,maps);
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
