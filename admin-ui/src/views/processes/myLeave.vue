@@ -106,10 +106,15 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created() {
+
+  },
+  mounted() {
+    
+  },
   methods: {
     submitForm() {
+      console.log(this)
       this.$refs['leaveForm'].validate(valid => {
         if (!valid) return
         // TODO 提交表单

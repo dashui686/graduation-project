@@ -90,9 +90,7 @@ public class ProcessDeployController {
     public AjaxResult edit(@Validated @RequestBody ProcessDeploy processDeploy)
     {
         processDeploy.setUpdateTime(LocalDateTime.now());
-        boolean b = processDeploy.updateById();
-
-        return AjaxResult.toAjax(b);
+        return AjaxResult.toAjax(processDeploy.updateById());
     }
 
     /**
@@ -101,8 +99,7 @@ public class ProcessDeployController {
     @DeleteMapping("/{postIds}")
     public AjaxResult remove(@PathVariable Long[] postIds)
     {
-        boolean b = processDeployService.removeByIds(Collections.arrayToList(postIds));
-        return AjaxResult.toAjax(b);
+        return AjaxResult.toAjax(processDeployService.removeByIds(Collections.arrayToList(postIds)));
     }
 
 
