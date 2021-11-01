@@ -25,13 +25,13 @@
           />
         </div>
       </el-col>
-      <!--用户数据-->
+      <!--商品数据-->
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="商品名称" prop="GoodsName">
+          <el-form-item label="商品名称" prop="userName">
             <el-input
               v-model="queryParams.userName"
-              placeholder="请输入用户名称"
+              placeholder="请输入商品名称"
               clearable
               size="small"
               style="width: 240px"
@@ -51,7 +51,7 @@
           <el-form-item label="状态" prop="status">
             <el-select
               v-model="queryParams.status"
-              placeholder="用户状态"
+              placeholder="商品状态"
               clearable
               size="small"
               style="width: 240px"
@@ -141,24 +141,21 @@
 
         <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
-          <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="部门" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
-          <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
+          <el-table-column label="商品ID" align="center" key="goodsId" prop="goodsId" v-if="columns[0].visible" />
+          <el-table-column label="商品名称" align="center" key="goodsName" prop="goodsName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="商品分类" align="center" key="goodsTypeId" prop="goodsTypeId" v-if="columns[2].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="商品编号" align="center" key="goodsNo" prop="goodsNo" v-if="columns[3].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="商品产地" align="center" key="goodsLocality" prop="goodsLocality" v-if="columns[4].visible" width="120" />
+          <el-table-column label="商品单位" align="center" key="goodsUnit" prop="goodsUnit" v-if="columns[5].visible" width="120" />
+
+          <el-table-column label="创建时间" align="center" prop="createDate" v-if="columns[6].visible" width="160">
             <template slot-scope="scope">
-              <el-switch
-                v-model="scope.row.status"
-                active-value="0"
-                inactive-value="1"
-                @change="handleStatusChange(scope.row)"
-              ></el-switch>
+              <span>{{ parseTime(scope.row.createDate) }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+          <el-table-column label="创建时间" align="center" prop="updateDate" v-if="columns[6].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{ parseTime(scope.row.updateDate) }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -212,8 +209,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户昵称" maxlength="30" />
+            <el-form-item label="商品昵称" prop="nickName">
+              <el-input v-model="form.nickName" placeholder="请输入商品昵称" maxlength="30" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -236,19 +233,19 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户名称" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户名称" maxlength="30" />
+            <el-form-item v-if="form.userId == undefined" label="商品名称" prop="userName">
+              <el-input v-model="form.userName" placeholder="请输入商品名称" maxlength="30" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
-              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" maxlength="20" show-password/>
+            <el-form-item v-if="form.userId == undefined" label="商品密码" prop="password">
+              <el-input v-model="form.password" placeholder="请输入商品密码" type="password" maxlength="20" show-password/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户性别">
+            <el-form-item label="商品性别">
               <el-select v-model="form.sex" placeholder="请选择">
                 <el-option
                   v-for="dict in dict.type.sys_user_sex"
@@ -313,7 +310,7 @@
       </div>
     </el-dialog>
 
-    <!-- 用户导入对话框 -->
+    <!-- 商品导入对话框 -->
     <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
       <el-upload
         ref="upload"
@@ -331,7 +328,7 @@
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip text-center" slot="tip">
           <div class="el-upload__tip" slot="tip">
-            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
+            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的商品数据
           </div>
           <span>仅允许导入xls、xlsx格式文件。</span>
           <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" @click="importTemplate">下载模板</el-link>
@@ -347,13 +344,14 @@
 
 <script>
   import { listUser, getUser, delUser, addUser, updateUser, exportUser, resetUserPwd, changeUserStatus, importTemplate } from "@/api/system/user";
+  import {  treeselect } from "@/api/drp/warehouse";
+  import {  listGoods } from "@/api/drp/goods";
   import { getToken } from "@/utils/auth";
-  import { treeselect } from "@/api/system/dept";
   import Treeselect from "@riophae/vue-treeselect";
   import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
   export default {
-    name: "goods",
+    name: "User",
     dicts: ['sys_normal_disable', 'sys_user_sex'],
     components: { Treeselect },
     data() {
@@ -372,7 +370,7 @@
         showSearch: true,
         // 总条数
         total: 0,
-        // 用户表格数据
+        // 商品表格数据
         userList: null,
         // 弹出层标题
         title: "",
@@ -396,15 +394,15 @@
           children: "children",
           label: "label"
         },
-        // 用户导入参数
+        // 商品导入参数
         upload: {
-          // 是否显示弹出层（用户导入）
+          // 是否显示弹出层（商品导入）
           open: false,
-          // 弹出层标题（用户导入）
+          // 弹出层标题（商品导入）
           title: "",
           // 是否禁用上传
           isUploading: false,
-          // 是否更新已经存在的用户数据
+          // 是否更新已经存在的商品数据
           updateSupport: 0,
           // 设置上传的请求头部
           headers: { Authorization: "Bearer " + getToken() },
@@ -418,13 +416,13 @@
           userName: undefined,
           phonenumber: undefined,
           status: undefined,
-          deptId: undefined
+          warehouseId: undefined
         },
         // 列信息
         columns: [
-          { key: 0, label: `用户编号`, visible: true },
-          { key: 1, label: `用户名称`, visible: true },
-          { key: 2, label: `用户昵称`, visible: true },
+          { key: 0, label: `商品编号`, visible: true },
+          { key: 1, label: `商品名称`, visible: true },
+          { key: 2, label: `商品昵称`, visible: true },
           { key: 3, label: `部门`, visible: true },
           { key: 4, label: `手机号码`, visible: true },
           { key: 5, label: `状态`, visible: true },
@@ -433,15 +431,15 @@
         // 表单校验
         rules: {
           userName: [
-            { required: true, message: "用户名称不能为空", trigger: "blur" },
-            { min: 2, max: 20, message: '用户名称长度必须介于 2 和 20 之间', trigger: 'blur' }
+            { required: true, message: "商品名称不能为空", trigger: "blur" },
+            { min: 2, max: 20, message: '商品名称长度必须介于 2 和 20 之间', trigger: 'blur' }
           ],
           nickName: [
-            { required: true, message: "用户昵称不能为空", trigger: "blur" }
+            { required: true, message: "商品昵称不能为空", trigger: "blur" }
           ],
           password: [
-            { required: true, message: "用户密码不能为空", trigger: "blur" },
-            { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' }
+            { required: true, message: "商品密码不能为空", trigger: "blur" },
+            { min: 5, max: 20, message: '商品密码长度必须介于 5 和 20 之间', trigger: 'blur' }
           ],
           email: [
             {
@@ -467,19 +465,20 @@
       }
     },
     created() {
-      this.getList();
       this.getTreeselect();
+      this.getList();
       this.getConfigKey("sys.user.initPassword").then(response => {
         this.initPassword = response.msg;
       });
     },
     methods: {
-      /** 查询用户列表 */
+      /** 查询商品列表 */
       getList() {
         this.loading = true;
-        listUser(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-            this.userList = response.rows;
-            this.total = response.total;
+        listGoods(this.queryParams).then(response => {
+          console.log(response,"1111")
+            this.userList = response.data;
+            // this.total = response.total;
             this.loading = false;
           }
         );
@@ -497,13 +496,13 @@
       },
       // 节点单击事件
       handleNodeClick(data) {
-        this.queryParams.deptId = data.id;
+        this.queryParams.warehouseId = data.id;
         this.getList();
       },
-      // 用户状态修改
+      // 商品状态修改
       handleStatusChange(row) {
         let text = row.status === "0" ? "启用" : "停用";
-        this.$modal.confirm('确认要"' + text + '""' + row.userName + '"用户吗？').then(function() {
+        this.$modal.confirm('确认要"' + text + '""' + row.userName + '"商品吗？').then(function() {
           return changeUserStatus(row.userId, row.status);
         }).then(() => {
           this.$modal.msgSuccess(text + "成功");
@@ -572,7 +571,7 @@
           this.postOptions = response.posts;
           this.roleOptions = response.roles;
           this.open = true;
-          this.title = "添加用户";
+          this.title = "添加商品";
           this.form.password = this.initPassword;
         });
       },
@@ -588,7 +587,7 @@
           this.form.postIds = response.postIds;
           this.form.roleIds = response.roleIds;
           this.open = true;
-          this.title = "修改用户";
+          this.title = "修改商品";
           this.form.password = "";
         });
       },
@@ -599,7 +598,7 @@
           cancelButtonText: "取消",
           closeOnClickModal: false,
           inputPattern: /^.{5,20}$/,
-          inputErrorMessage: "用户密码长度必须介于 5 和 20 之间",
+          inputErrorMessage: "商品密码长度必须介于 5 和 20 之间",
         }).then(({ value }) => {
           resetUserPwd(row.userId, value).then(response => {
             this.$modal.msgSuccess("修改成功，新密码是：" + value);
@@ -634,7 +633,7 @@
       /** 删除按钮操作 */
       handleDelete(row) {
         const userIds = row.userId || this.ids;
-        this.$modal.confirm('是否确认删除用户编号为"' + userIds + '"的数据项？').then(function() {
+        this.$modal.confirm('是否确认删除商品编号为"' + userIds + '"的数据项？').then(function() {
           return delUser(userIds);
         }).then(() => {
           this.getList();
@@ -644,7 +643,7 @@
       /** 导出按钮操作 */
       handleExport() {
         const queryParams = this.queryParams;
-        this.$modal.confirm('是否确认导出所有用户数据项？').then(() => {
+        this.$modal.confirm('是否确认导出所有商品数据项？').then(() => {
           this.exportLoading = true;
           return exportUser(queryParams);
         }).then(response => {
@@ -654,7 +653,7 @@
       },
       /** 导入按钮操作 */
       handleImport() {
-        this.upload.title = "用户导入";
+        this.upload.title = "商品导入";
         this.upload.open = true;
       },
       /** 下载模板操作 */

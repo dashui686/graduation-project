@@ -4,10 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dream.common.core.domain.AjaxResult;
+import com.dream.common.core.page.PageDomain;
 import com.dream.drp.domain.DrpGoods;
 import com.dream.drp.service.DrpGoodsService;
 import com.dream.drp.mapper.DrpGoodsMapper;
+import io.jsonwebtoken.lang.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -17,22 +22,19 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
     implements DrpGoodsService{
 
 
+    @Autowired
+    DrpGoodsMapper drpGoodsMapper;
+
     @Override
     public AjaxResult select(DrpGoods drpGoods, Integer current, Integer size) {
-        Page<DrpGoods> page = page(
-                new Page<DrpGoods>(current, size)
-//                ,
-//                new QueryWrapper<DrpGoods>()
-//                        .eq(
-//                                processDeploy.getProcessName()!= null && !processDeploy.getProcessName().isEmpty(),
-//                                "ProcessName",processDeploy.getProcessName()
-//                        )
-//                        .eq(
-//                                processDeploy.getProcessState()!=null ,
-//                                "ProcessState",processDeploy.getProcessState()
-//                        )
-        );
-        return AjaxResult.success(page);
+
+        return AjaxResult.success();
+    }
+
+    @Override
+    public List<DrpGoods> queryGoodsByWarehouseId(Integer warehouseId, DrpGoods drpGoods, PageDomain pageDomain) {
+
+        return drpGoodsMapper.queryGoodsByWarehouseId(warehouseId,drpGoods,pageDomain);
     }
 
     @Override
@@ -51,8 +53,8 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
     }
 
     @Override
-    public AjaxResult remove(Integer[] id) {
-        return AjaxResult.success(removeById(id));
+    public AjaxResult remove(Long[] id) {
+        return AjaxResult.success(removeByIds(Collections.arrayToList(id)));
     }
 }
 

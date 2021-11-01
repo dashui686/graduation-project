@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dream.common.core.domain.AjaxResult;
 import com.dream.common.core.page.PageDomain;
 import com.dream.common.core.page.TableSupport;
+import com.dream.common.utils.SecurityUtils;
 import com.dream.process.domain.ProcessDeploy;
 import com.dream.process.service.ProcessDeployService;
 import io.jsonwebtoken.lang.Collections;
@@ -65,6 +66,7 @@ public class ProcessDeployController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody ProcessDeploy processDeploy, Principal principal)
     {
+//        Long id = SecurityUtils.getLoginUser().getUserId();
         processDeploy.setCreateTime(LocalDateTime.now());
         processDeploy.setProcessDeployer(principal.getName());
         processDeploy.setProcessState("1");

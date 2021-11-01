@@ -9,7 +9,6 @@
             <result property="goodsName" column="GoodsName" jdbcType="VARCHAR"/>
             <result property="goodsTypeId" column="GoodsTypeId" jdbcType="INTEGER"/>
             <result property="goodsNo" column="GoodsNo" jdbcType="VARCHAR"/>
-            <result property="goodsModel" column="GoodsModel" jdbcType="VARCHAR"/>
             <result property="goodsLocality" column="GoodsLocality" jdbcType="VARCHAR"/>
             <result property="goodsUnit" column="GoodsUnit" jdbcType="VARCHAR"/>
             <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
@@ -18,7 +17,37 @@
 
     <sql id="Base_Column_List">
         GoodsId,GoodsName,GoodsTypeId,
-        GoodsNo,GoodsModel,GoodsLocality,
-        GoodsUnit,CreateDate,UpdateDate
+        GoodsNo,GoodsLocality,GoodsUnit,
+        CreateDate,UpdateDate
     </sql>
+    <sql id="Base_Column_List_g">
+        g.GoodsId,g.GoodsName,g.GoodsTypeId,
+        g.GoodsNo,g.GoodsLocality,g.GoodsUnit,
+        g.CreateDate,g.UpdateDate
+    </sql>
+
+
+    <select id="queryGoodsByWarehouseId" resultType="drpGoods">
+        select
+        <include refid="Base_Column_List_g"></include>
+        from drp_goods as g
+        LEFT JOIN
+        drp_goods_warehouse w
+        on
+        w.GoodsNo = g.GoodsNo
+
+        <where >
+            <if test="warehouseId != null">
+                and w.WarehouseId = #{warehouseId}
+            </if>
+            <if test="drpGoods.goodsId !=null">
+                and g.GoodsId = #{drpGoods.goodsId}
+            </if>
+            <if test="drpGoods.goodsName !=null">
+                and g.GoodsName = '%'+#{drpGoods.goodsName}+'%'
+            </if>
+        </where>
+        <bind name="current" value="pageDomain.pageSize*(pageDomain.pageNum-1)"/>
+        limit #{current},#{pageDomain.pageSize}
+    </select>
 </mapper>
