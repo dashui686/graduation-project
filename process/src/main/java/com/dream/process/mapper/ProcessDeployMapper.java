@@ -1,6 +1,6 @@
-package com.dream.deploy.mapper;
+package com.dream.process.mapper;
 
-import com.dream.deploy.domain.ProcessDeploy;
+import com.dream.process.domain.ProcessDeploy;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

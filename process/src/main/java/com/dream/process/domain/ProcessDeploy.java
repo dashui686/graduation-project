@@ -1,4 +1,4 @@
-package com.dream.deploy.domain;
+package com.dream.process.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

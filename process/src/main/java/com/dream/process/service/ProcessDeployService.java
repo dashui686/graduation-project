@@ -1,6 +1,6 @@
-package com.dream.deploy.service;
+package com.dream.process.service;
 
-import com.dream.deploy.domain.ProcessDeploy;
+import com.dream.process.domain.ProcessDeploy;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
