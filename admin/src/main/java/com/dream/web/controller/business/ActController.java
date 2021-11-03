@@ -7,7 +7,9 @@ import com.dream.common.core.domain.AjaxResult;
 import com.dream.common.core.domain.model.LoginUser;
 import com.dream.common.utils.SecurityUtils;
 import com.dream.process.domain.ProcessDeploy;
+import com.dream.process.entity.TaskInstance;
 import com.dream.process.service.ProcessDeployService;
+import com.dream.process.utils.ProcessUtils;
 import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.task.runtime.TaskRuntime;
 import org.activiti.engine.*;
@@ -15,15 +17,14 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
+import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,6 +63,8 @@ public class ActController {
     @Autowired
     private HistoryService historyService;
 
+    @Autowired
+    ProcessUtils processUtils;
 
     @Autowired
     ProcessDeployService processDeployService;
@@ -117,7 +120,7 @@ public class ActController {
         DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
         List<Deployment> list = deploymentQuery.list();
         for (Deployment deployment : list) {
-            repositoryService.deleteDeployment(deployment.getId());
+            repositoryService.deleteDeployment(deployment.getId(),true);
         }
         processDeployService.update(new UpdateWrapper<ProcessDeploy>().set("ProcessState",1));
         return "123";
@@ -130,4 +133,30 @@ public class ActController {
     public LoginUser myLeave(){
         return SecurityUtils.getLoginUser();
     }
+
+
+    @GetMapping("/test/myProcess")
+    public AjaxResult myProcess(){
+        List<Task> list = taskService.createTaskQuery().taskAssignee("1").list();
+//        for (Task task : list) {
+//            System.out.println(task.getTaskDefinitionKey());
+//            System.out.println(task.getFormKey());
+//            System.out.println(task.getOwner());
+//            System.out.println(task.getTenantId());
+//            System.out.println(task.getProcessDefinitionId());
+//            System.out.println(task.getProcessInstanceId());
+//            System.out.println(task.getProcessVariables());
+//            System.out.println(task.getTaskLocalVariables());
+//            System.out.println(task.getName());
+//            System.out.println(task.getId());
+//            System.out.println(task.getExecutionId());
+//            System.out.println(task.getCategory());
+//            System.out.println(task.getDelegationState());
+//            System.out.println(task.getDescription());
+//        }
+                List<TaskInstance> taskList = processUtils.getTaskList(list);
+        return AjaxResult.success(taskList);
+//        return AjaxResult.success();
+    }
+
 }

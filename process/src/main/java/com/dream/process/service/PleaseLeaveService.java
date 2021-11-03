@@ -8,5 +8,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PleaseLeaveService extends IService<PleaseLeave> {
 
-       public boolean addLeave(PleaseLeave pleaseLeave) throws Exception;
+       public boolean addLeave(PleaseLeave pleaseLeave, Integer assignee) throws Exception;
 }
