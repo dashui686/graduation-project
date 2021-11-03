@@ -19,6 +19,14 @@ export function getProcessDeploy(processId) {
   })
 }
 
+// 查询待办任务，根据用户ID
+export function getMyProcess() {
+  return request({
+    url: '/test/process/myProcess',
+    method: 'get'
+  })
+}
+
 
 // 新增岗位
 export function addProcessDeploy(data) {

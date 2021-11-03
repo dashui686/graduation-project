@@ -18,6 +18,14 @@ export function getUser(userId) {
   })
 }
 
+// 查询用户options
+export function listByOption() {
+  return request({
+    url: '/system/user/listByOption',
+    method: 'get'
+  })
+}
+
 // 新增用户
 export function addUser(data) {
   return request({

@@ -16,8 +16,8 @@
         <el-date-picker v-model="leaveFormData.endDate"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
           :style="{width: '100%'}" placeholder="请选择结束时间" clearable></el-date-picker>
       </el-form-item>
-      <el-form-item label="时长(小时)" prop="countDay">
-        <el-input-number v-model="leaveFormData.countDay" disabled placeholder="时长(小时)" :step='1' :precision='2'>
+      <el-form-item label="时长(小时)" prop="duration">
+        <el-input-number v-model="leaveFormData.duration" disabled placeholder="时长(小时)" :step='1' :precision='2'>
         </el-input-number>
       </el-form-item>
       <el-form-item label="请假理由" prop="reason">
@@ -39,6 +39,9 @@
   </div>
 </template>
 <script>
+import { listByOption } from "@/api/system/user";
+import { addLeave } from "@/api/process/myLeave";
+
 export default {
   name:"myLeave",
   components: {},
@@ -49,7 +52,7 @@ export default {
         type: undefined,
         beginDate: null,
         endDate: null,
-        countDay: 0,
+        duration: undefined,
         reason: undefined,
         assignee: undefined,
       },
@@ -69,7 +72,7 @@ export default {
           message: '请选择结束时间',
           trigger: 'change'
         }],
-        countDay: [{
+        duration: [{
           required: true,
           message: '时长(小时)',
           trigger: 'blur'
@@ -104,20 +107,52 @@ export default {
       }],
     }
   },
-  computed: {},
-  watch: {},
-  created() {
+  computed: {
+    dayCount(){
+      return 1.1;
+    }
+  },
+  watch: {
+    'leaveFormData.endDate':function(newValue,oldValue){
+      let a = this.leaveFormData.beginDate;
+      var endDate = new Date(newValue.replace(/-/g, "/"));
+      if(a == undefined){return}
+      var beginDate = new Date(a.replace(/-/g, "/"));
+      var usedTime = this.getIntervalHour(beginDate,endDate);
+      this.leaveFormData.duration = usedTime
+    },
+    'leaveFormData.beginDate':function(newValue,oldValue){
+      let a = this.leaveFormData.endDate;
+      var beginDate = new Date(newValue.replace(/-/g, "/"));
+      if(a == undefined){return}
+      var endDate = new Date(a.replace(/-/g, "/"));
+      var usedTime = this.getIntervalHour(beginDate,endDate);
+      this.leaveFormData.duration = usedTime
 
+    },
+  },
+  created() {
+    listByOption().then(response => {
+      this.assigneeOptions = response.data
+    });
   },
   mounted() {
     
   },
   methods: {
+    getIntervalHour(startDate, endDate) {
+            var ms = endDate.getTime() - startDate.getTime();
+            if (ms < 0) return 0;
+            return Math.floor(ms/1000/60/60);
+        },
     submitForm() {
       console.log(this)
       this.$refs['leaveForm'].validate(valid => {
         if (!valid) return
         // TODO 提交表单
+        addLeave(this.leaveFormData).then(res=>{
+          console.log(res);
+        })
       })
     },
     resetForm() {

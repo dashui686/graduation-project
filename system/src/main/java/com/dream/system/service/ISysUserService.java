@@ -1,6 +1,8 @@
 package com.dream.system.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.dream.common.core.domain.entity.SysUser;
 
 /**
@@ -49,6 +51,13 @@ public interface ISysUserService
      * @return 用户对象信息
      */
     public SysUser selectUserById(Long userId);
+
+    /**
+     * 查询用户键值对
+     *
+     * @return 用户对象信息
+     */
+    public List<Map<String,String>> selectUserByOptions();
 
     /**
      * 根据用户ID查询用户所属角色组

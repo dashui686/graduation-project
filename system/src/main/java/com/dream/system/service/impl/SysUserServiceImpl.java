@@ -2,6 +2,8 @@ package com.dream.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +117,11 @@ public class SysUserServiceImpl implements ISysUserService
     public SysUser selectUserById(Long userId)
     {
         return userMapper.selectUserById(userId);
+    }
+
+    @Override
+    public List<Map<String, String>> selectUserByOptions() {
+        return userMapper.selectUserByOptions();
     }
 
     /**

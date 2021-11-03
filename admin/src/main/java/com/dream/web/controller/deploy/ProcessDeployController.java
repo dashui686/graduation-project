@@ -10,9 +10,14 @@ import com.dream.common.core.page.TableSupport;
 import com.dream.common.utils.SecurityUtils;
 import com.dream.process.domain.ProcessDeploy;
 import com.dream.process.service.ProcessDeployService;
+import com.sun.jmx.snmp.tasks.TaskServer;
 import io.jsonwebtoken.lang.Collections;
+import org.activiti.api.task.runtime.TaskRuntime;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.InputStream;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.zip.ZipInputStream;
 
 @RestController
@@ -33,6 +39,10 @@ public class ProcessDeployController {
      */
     @Autowired
     private RepositoryService repositoryService;
+    @Autowired
+    TaskRuntime taskRuntime;
+    @Autowired
+    TaskService taskService;
 
     @GetMapping("/select")
     public AjaxResult select(ProcessDeploy processDeploy){
@@ -42,7 +52,7 @@ public class ProcessDeployController {
                 .page(
                         new Page<ProcessDeploy>(pageDomain.getPageNum(), pageDomain.getPageSize()),
                         new QueryWrapper<ProcessDeploy>()
-                                .eq(
+                                .like(
                                         processDeploy.getProcessName()!= null && !processDeploy.getProcessName().isEmpty(),
                                         "ProcessName",processDeploy.getProcessName()
                                 )
@@ -140,5 +150,8 @@ public class ProcessDeployController {
         boolean update = processDeployService.update(new UpdateWrapper<ProcessDeploy>().set("ProcessState", 1).eq(a,"ProcessId", processDeploy1.getProcessId()));
         return AjaxResult.toAjax(update&&a);
     }
+
+
+
 
 }

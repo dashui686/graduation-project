@@ -11,6 +11,16 @@
 
     <artifactId>process</artifactId>
     <dependencies>
+
+        <!--activiti-->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dream</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
         <!--        mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
