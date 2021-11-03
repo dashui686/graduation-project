@@ -84,7 +84,7 @@
 
         <dependency>
             <groupId>com.dream</groupId>
-            <artifactId>deploy</artifactId>
+            <artifactId>process</artifactId>
         </dependency>
 
         <dependency>

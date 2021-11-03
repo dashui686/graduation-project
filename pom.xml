@@ -221,7 +221,7 @@
 
             <dependency>
                 <groupId>com.dream</groupId>
-                <artifactId>deploy</artifactId>
+                <artifactId>process</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
@@ -244,9 +244,9 @@
         <module>framework</module>
         <module>system</module>
         <module>quartz</module>
+        <module>process</module>
         <module>generator</module>
         <module>common</module>
-        <module>deploy</module>
         <module>drp</module>
     </modules>
     <packaging>pom</packaging>

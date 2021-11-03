@@ -15,6 +15,7 @@ import java.util.List;
 public interface DrpGoodsMapper extends BaseMapper<DrpGoods> {
 
     List<DrpGoods> queryGoodsByWarehouseId(@Param("warehouseId") Integer warehouseId,@Param("drpGoods") DrpGoods drpGoods,@Param("pageDomain") PageDomain pageDomain);
+    DrpGoods getOne(@Param("id") Integer id);
 }
 
 

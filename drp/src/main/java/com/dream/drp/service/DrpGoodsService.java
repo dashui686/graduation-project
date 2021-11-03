@@ -2,6 +2,7 @@ package com.dream.drp.service;
 
 import com.dream.common.core.domain.AjaxResult;
 import com.dream.common.core.page.PageDomain;
+import com.dream.drp.Exception.GoodsIsExist;
 import com.dream.drp.domain.DrpGoods;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public interface DrpGoodsService extends IService<DrpGoods> {
      * 添加
      * @return
      */
-    public AjaxResult add(DrpGoods drpGoods);
+    public AjaxResult add(DrpGoods drpGoods) throws GoodsIsExist;
 
     /**
      * 修改

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="120px">
       <el-form-item label="商品类型ID" prop="goodsTypeId">
         <el-input
           v-model="queryParams.goodsTypeId"
@@ -120,7 +120,7 @@
 
     <!-- 添加或修改商品类型对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="130px">
         <el-form-item label="商品类型名称" prop="goodsTypeName">
           <el-input v-model="form.goodsTypeName" placeholder="请输入商品类型名称" />
         </el-form-item>
@@ -180,13 +180,13 @@
         form: {},
         // 表单校验
         rules: {
-          postName: [
+          goodsTypeName: [
             { required: true, message: "商品类型名称不能为空", trigger: "blur" }
           ],
-          postCode: [
+          goodsTypeDesc: [
             { required: true, message: "商品类型编码不能为空", trigger: "blur" }
           ],
-          postSort: [
+          sort: [
             { required: true, message: "商品类型顺序不能为空", trigger: "blur" }
           ]
         }

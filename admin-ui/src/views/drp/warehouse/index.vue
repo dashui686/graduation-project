@@ -116,7 +116,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改岗位对话框 -->
+    <!-- 添加或修改仓库对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="仓库名称" prop="warehouseName">
@@ -160,7 +160,7 @@
         showSearch: true,
         // 总条数
         total: 0,
-        // 岗位表格数据
+        // 仓库表格数据
         postList: [],
         // 弹出层标题
         title: "",
@@ -178,13 +178,13 @@
         // 表单校验
         rules: {
           postName: [
-            { required: true, message: "岗位名称不能为空", trigger: "blur" }
+            { required: true, message: "仓库名称不能为空", trigger: "blur" }
           ],
           postCode: [
-            { required: true, message: "岗位编码不能为空", trigger: "blur" }
+            { required: true, message: "仓库编码不能为空", trigger: "blur" }
           ],
           postSort: [
-            { required: true, message: "岗位顺序不能为空", trigger: "blur" }
+            { required: true, message: "仓库顺序不能为空", trigger: "blur" }
           ]
         }
       };
@@ -193,7 +193,7 @@
       this.getList();
     },
     methods: {
-      /** 查询岗位列表 */
+      /** 查询仓库列表 */
       getList() {
         this.loading = true;
         listWarehouse(this.queryParams).then(res => {
@@ -240,7 +240,7 @@
       handleAdd() {
         this.reset();
         this.open = true;
-        this.title = "添加岗位";
+        this.title = "添加仓库";
       },
       /** 修改按钮操作 */
       handleUpdate(row) {
@@ -249,7 +249,7 @@
         getWarehouse(postId).then(response => {
             this.form = response.data;
           this.open = true;
-          this.title = "修改岗位";
+          this.title = "修改仓库";
         });
       },
       /** 提交按钮 */
@@ -276,7 +276,7 @@
       handleDelete(row) {
         console.log(row)
         const postIds = row.warehouseId || this.ids;
-        this.$modal.confirm('是否确认删除岗位编号为"' + postIds + '"的数据项？').then(function() {
+        this.$modal.confirm('是否确认删除仓库编号为"' + postIds + '"的数据项？').then(function() {
           return delWarehouse(postIds);
         }).then(() => {
           this.getList();
@@ -286,7 +286,7 @@
       /** 导出按钮操作 */
       handleExport() {
         const queryParams = this.queryParams;
-        this.$modal.confirm('是否确认导出所有岗位数据项？').then(() => {
+        this.$modal.confirm('是否确认导出所有仓库数据项？').then(() => {
           this.exportLoading = true;
           return exportPost(queryParams);
         }).then(response => {

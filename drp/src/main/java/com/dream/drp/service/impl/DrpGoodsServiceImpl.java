@@ -5,12 +5,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dream.common.core.domain.AjaxResult;
 import com.dream.common.core.page.PageDomain;
+import com.dream.drp.Exception.GoodsIsExist;
 import com.dream.drp.domain.DrpGoods;
+import com.dream.drp.domain.DrpGoodsWarehouse;
+import com.dream.drp.domain.DrpWarehouse;
+import com.dream.drp.mapper.DrpGoodsWarehouseMapper;
 import com.dream.drp.service.DrpGoodsService;
 import com.dream.drp.mapper.DrpGoodsMapper;
+import com.dream.drp.service.DrpGoodsWarehouseService;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,11 +30,25 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
 
     @Autowired
     DrpGoodsMapper drpGoodsMapper;
+    @Autowired
+    DrpGoodsWarehouseService goodsWarehouseService;
 
     @Override
     public AjaxResult select(DrpGoods drpGoods, Integer current, Integer size) {
 
-        return AjaxResult.success();
+        Page<DrpGoods> page = page(
+                new Page<DrpGoods>(current, size),
+                new QueryWrapper<DrpGoods>()
+                        .eq(
+                                drpGoods.getGoodsName()!= null && !drpGoods.getGoodsName().isEmpty(),
+                                "GoodsName","%"+drpGoods.getGoodsName()+"%"
+                        )
+                        .eq(
+                                drpGoods.getGoodsId()!=null ,
+                                "GoodsId",drpGoods.getGoodsId()
+                        )
+        );
+        return AjaxResult.success(page);
     }
 
     @Override
@@ -39,17 +59,34 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
 
     @Override
     public AjaxResult getOne(Integer id) {
-        return AjaxResult.success(getById(id));
+        DrpGoods byId = drpGoodsMapper.getOne(id);
+        System.out.println(byId);
+        return AjaxResult.success(byId);
     }
 
     @Override
-    public AjaxResult add(DrpGoods drpGoods) {
-        return AjaxResult.success(add(drpGoods));
+    @Transactional // 开启事务
+    public AjaxResult add(DrpGoods drpGoods) throws GoodsIsExist {
+        boolean save = save(drpGoods);
+        boolean insert = goodsWarehouseService.save(new DrpGoodsWarehouse(drpGoods.getGoodsId(), drpGoods.getWarehouseId()));
+        return AjaxResult.success(save&&insert);
     }
 
     @Override
     public AjaxResult edit(DrpGoods drpGoods) {
-        return AjaxResult.success(updateById(drpGoods));
+        boolean save=false;
+        DrpGoodsWarehouse one = goodsWarehouseService
+                .getOne(
+                        new QueryWrapper<DrpGoodsWarehouse>()
+                                .eq("GoodsId", drpGoods.getGoodsId())
+                                .eq("WarehouseId", drpGoods.getWarehouseId()));
+        if(one!=null){
+            return AjaxResult.success(updateById(drpGoods));
+        }else{
+            return AjaxResult.error("商品不存在");
+        }
+
+
     }
 
     @Override

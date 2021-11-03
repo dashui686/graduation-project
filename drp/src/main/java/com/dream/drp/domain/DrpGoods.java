@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -34,10 +36,10 @@ public class DrpGoods implements Serializable {
     private Integer goodsTypeId;
 
     /**
-     * 商品编号
+     * 商品数量
      */
-    @TableField(value = "GoodsNo")
-    private String goodsNo;
+    @TableField(value = "GoodsCount")
+    private Integer goodsCount;
 
     /**
      * 商品产地
@@ -60,11 +62,22 @@ public class DrpGoods implements Serializable {
     /**
      * 
      */
+
     @TableField(value = "UpdateDate")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateDate;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    @TableField(exist = false)
+    private Integer warehouseId;
+
+    @TableField(exist = false)
+    private String warehouseName;
+
+    @TableField(exist = false)
+    private String goodsTypeName;
 
     @Override
     public boolean equals(Object that) {
@@ -81,7 +94,7 @@ public class DrpGoods implements Serializable {
         return (this.getGoodsId() == null ? other.getGoodsId() == null : this.getGoodsId().equals(other.getGoodsId()))
             && (this.getGoodsName() == null ? other.getGoodsName() == null : this.getGoodsName().equals(other.getGoodsName()))
             && (this.getGoodsTypeId() == null ? other.getGoodsTypeId() == null : this.getGoodsTypeId().equals(other.getGoodsTypeId()))
-            && (this.getGoodsNo() == null ? other.getGoodsNo() == null : this.getGoodsNo().equals(other.getGoodsNo()))
+            && (this.getGoodsCount() == null ? other.getGoodsCount() == null : this.getGoodsCount().equals(other.getGoodsCount()))
             && (this.getGoodsLocality() == null ? other.getGoodsLocality() == null : this.getGoodsLocality().equals(other.getGoodsLocality()))
             && (this.getGoodsUnit() == null ? other.getGoodsUnit() == null : this.getGoodsUnit().equals(other.getGoodsUnit()))
             && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
@@ -95,7 +108,7 @@ public class DrpGoods implements Serializable {
         result = prime * result + ((getGoodsId() == null) ? 0 : getGoodsId().hashCode());
         result = prime * result + ((getGoodsName() == null) ? 0 : getGoodsName().hashCode());
         result = prime * result + ((getGoodsTypeId() == null) ? 0 : getGoodsTypeId().hashCode());
-        result = prime * result + ((getGoodsNo() == null) ? 0 : getGoodsNo().hashCode());
+        result = prime * result + ((getGoodsCount() == null) ? 0 : getGoodsCount().hashCode());
         result = prime * result + ((getGoodsLocality() == null) ? 0 : getGoodsLocality().hashCode());
         result = prime * result + ((getGoodsUnit() == null) ? 0 : getGoodsUnit().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
@@ -103,22 +116,4 @@ public class DrpGoods implements Serializable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", goodsId=").append(goodsId);
-        sb.append(", goodsName=").append(goodsName);
-        sb.append(", goodsTypeId=").append(goodsTypeId);
-        sb.append(", goodsNo=").append(goodsNo);
-        sb.append(", goodsLocality=").append(goodsLocality);
-        sb.append(", goodsUnit=").append(goodsUnit);
-        sb.append(", createDate=").append(createDate);
-        sb.append(", updateDate=").append(updateDate);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

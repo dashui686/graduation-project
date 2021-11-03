@@ -22,8 +22,9 @@ export function getOneGoods(id) {
 
 // 新增商品
 export function addGoods(data) {
+  console.log(data,123)
   return request({
-    url: '/test/drpGoods/',
+    url: '/test/drpGoods',
     method: 'post',
     data: data
   })
@@ -47,5 +48,13 @@ export function delGoods(id) {
   })
 }
 
+
+// 查询树形值
+export function treeselect2() {
+  return request({
+    url: '/test/goodsType/treeselect',
+    method: 'get'
+  })
+}
 
 
