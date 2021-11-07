@@ -5,18 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dream.common.core.domain.AjaxResult;
 import com.dream.drp.domain.DrpRelation;
-import com.dream.drp.domain.DrpWarehouse;
-import com.dream.drp.service.DrpRelationService;
 import com.dream.drp.mapper.DrpRelationMapper;
+import com.dream.drp.service.CustomerService;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.stereotype.Service;
 
-/**
- *
- */
 @Service
-public class DrpRelationServiceImpl extends ServiceImpl<DrpRelationMapper, DrpRelation>
-    implements DrpRelationService{
+public class CustomerServiceImpl extends ServiceImpl<DrpRelationMapper, DrpRelation> implements CustomerService {
 
     @Override
     public AjaxResult select(DrpRelation drpRelation, Integer current, Integer size) {
@@ -31,11 +26,12 @@ public class DrpRelationServiceImpl extends ServiceImpl<DrpRelationMapper, DrpRe
                                 drpRelation.getId()!=null ,
                                 "id",drpRelation.getId()
                         ).eq(
-                                "Type",0
+                        "Type",1
                 )
         );
         return AjaxResult.success(page);
     }
+
 
     @Override
     public AjaxResult getOne(Integer id) {
@@ -58,7 +54,3 @@ public class DrpRelationServiceImpl extends ServiceImpl<DrpRelationMapper, DrpRe
         //Collections.arrayToList(id)
     }
 }
-
-
-
-

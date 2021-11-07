@@ -5,44 +5,44 @@ import request from '@/utils/request'
 // 查询所有 参数
 export function listRelation(query) {
   return request({
-    url: '/test/relation/supplier/select',
+    url: '/test/relation/customer/select',
     method: 'get',
     params: query
   })
 }
 
-// 查询供应商
+// 查询客户
 export function getOne(id) {
   return request({
-    url: '/test/relation/supplier/' + id,
+    url: '/test/relation/customer/' + id,
     method: 'get'
   })
 }
 
 
-// 新增供应商
+// 新增客户
 export function addRelation(data) {
   return request({
-    url: '/test/relation/supplier/',
+    url: '/test/relation/customer/',
     method: 'post',
     data: data
   })
 }
 
-// 修改供应商
+// 修改客户
 export function updateRelation(data) {
 
   return request({
-    url: '/test/relation/supplier/',
+    url: '/test/relation/customer/',
     method: 'put',
     data: data
   })
 }
 
-// 删除供应商
+// 删除客户
 export function delRelation(id) {
   return request({
-    url: '/test/relation/supplier/delete/' + id,
+    url: '/test/relation/customer/delete/' + id,
     method: 'delete'
   })
 }
