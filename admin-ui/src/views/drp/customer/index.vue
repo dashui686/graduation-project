@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="供应商ID" prop="id">
+      <el-form-item label="客户ID" prop="id">
         <el-input
           v-model="queryParams.id"
-          placeholder="请输入供应商ID"
+          placeholder="请输入客户ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="供应商名称" prop="name">
+      <el-form-item label="客户名称" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入供应商名称"
+          placeholder="请输入客户名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -74,20 +74,20 @@
 
     <el-table v-loading="loading" :data="postList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="供应商ID" align="center" prop="id" width="100" />
-      <el-table-column label="供应商名称" align="center" prop="name" width="100"/>
-      <el-table-column label="联系人" align="center" prop="contacts" width="100"/>
-      <el-table-column label="联系人职务" align="center" prop="contactsPoition" width="100"/>
+      <el-table-column label="客户ID" align="center" prop="id" width="90"/>
+      <el-table-column label="客户公司名称" align="center" prop="name" width="100"/>
+      <el-table-column label="联系人" align="center" prop="contacts" width="90"/>
+      <el-table-column label="联系人职务" align="center" prop="contactsPoition" width="90"/>
       <el-table-column label="联系人电话" align="center" prop="contactsPhone" width="180"/>
-      <el-table-column label="地址" align="center" prop="address" width="100"/>
-      <el-table-column label="银行卡号" align="center" prop="bankAccount" width="200"/>
-      <el-table-column label="开户名称" align="center" prop="bankName" width="150"/>
+      <el-table-column label="地址" align="center" prop="address"width="90" />
+      <el-table-column label="银行卡号" align="center" prop="bankAccount" width="180"/>
+      <el-table-column label="开户名称" align="center" prop="bankName" width="90"/>
       <el-table-column label="最后交易日期" align="center" prop="lasttradingDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.lasttradingDate) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后交易金额" align="center" prop="lasttradingMoney" width="100"/>
+      <el-table-column label="最后交易金额" align="center" prop="lasttradingMoney" width="180"/>
       <el-table-column label="创建时间" align="center" prop="createDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createDate) }}</span>
@@ -99,13 +99,13 @@
           <span>{{ parseTime(scope.row.updateDate) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="更新人" align="center" prop="updateUsers" width="100"/>
-      <el-table-column label="状态" align="center" prop="status" width="100">
+      <el-table-column label="更新人" align="center" prop="updateUsers" width="90"/>
+      <el-table-column label="状态" align="center" prop="status" width="90">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="联系人部门" align="center" prop="contactsDepartment" width="100"/>
+      <el-table-column label="联系人部门" align="center" prop="contactsDepartment" width="90"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
         <template slot-scope="scope">
           <el-button
@@ -134,13 +134,13 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改供应商对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="1200px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+    <!-- 添加或修改客户对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="供应商名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入供应商名称"/>
+            <el-form-item label="客户公司名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入客户公司名称"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -213,11 +213,10 @@
 </template>
 
 <script>
-  //import { listWarehouse,addWarehouse,updateWarehouse,getWarehouse,delWarehouse} from "@/api/drp/warehouse";
-  import { listRelation, getOne ,addRelation, updateRelation ,delRelation} from "@/api/drp/relation";
+  import { listRelation, getOne ,addRelation, updateRelation ,delRelation} from "@/api/drp/customer";
 
   export default {
-    name: "Post",
+    name: "Customer",
     dicts: ['sys_normal_disable'],
     data() {
       return {
@@ -235,7 +234,7 @@
         showSearch: true,
         // 总条数
         total: 0,
-        // 供应商表格数据
+        // 客户表格数据
         postList: [],
         // 弹出层标题
         title: "",
@@ -249,11 +248,11 @@
           name: undefined
         },
         // 表单参数
-        form: { type:0 },
+        form: {type:1},
         // 表单校验
         rules: {
           name: [
-            { required: true, message: "供应商名称不能为空", trigger: "blur" }
+            { required: true, message: "客户名称不能为空", trigger: "blur" }
           ],
           contacts: [
             { required: true, message: "联系人不能为空", trigger: "blur" }
@@ -289,7 +288,7 @@
       this.getList();
     },
     methods: {
-      /** 查询供应商列表 */
+      /** 查询客户列表 */
       getList() {
         this.loading = true;
         listRelation(this.queryParams).then(res => {
@@ -307,7 +306,7 @@
       // 表单重置
       reset() {
         this.form = {
-         type: 0
+         type: 1
         };
         this.resetForm("form");
       },
@@ -331,7 +330,7 @@
       handleAdd() {
         this.reset();
         this.open = true;
-        this.title = "添加供应商";
+        this.title = "添加客户";
       },
       /** 修改按钮操作 */
       handleUpdate(row) {
@@ -340,7 +339,7 @@
         getOne(postId).then(response => {
           this.form = response.data;
           this.open = true;
-          this.title = "修改供应商";
+          this.title = "修改客户";
         });
       },
       /** 提交按钮 */
@@ -367,7 +366,7 @@
       handleDelete(row) {
         console.log(row)
         const postIds = row.id || this.ids;
-        this.$modal.confirm('是否确认删除供应商编号为"' + postIds + '"的数据项？').then(function() {
+        this.$modal.confirm('是否确认删除客户编号为"' + postIds + '"的数据项？').then(function() {
           return delRelation(postIds);
         }).then(() => {
           this.getList();
@@ -377,7 +376,7 @@
       /** 导出按钮操作 */
       handleExport() {
         const queryParams = this.queryParams;
-        this.$modal.confirm('是否确认导出所有供应商数据项？').then(() => {
+        this.$modal.confirm('是否确认导出所有客户数据项？').then(() => {
           this.exportLoading = true;
           return exportPost(queryParams);
         }).then(response => {

@@ -1,6 +1,7 @@
 package com.dream.drp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dream.common.core.domain.AjaxResult;
@@ -90,8 +91,12 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
     }
 
     @Override
+    @Transactional
     public AjaxResult remove(Long[] id) {
-        return AjaxResult.success(removeByIds(Collections.arrayToList(id)));
+
+        boolean data = removeByIds(Collections.arrayToList(id));
+        boolean goodsId = goodsWarehouseService.remove(new UpdateWrapper<DrpGoodsWarehouse>().in("GoodsId", id));
+        return AjaxResult.success(data&&goodsId);
     }
 }
 
