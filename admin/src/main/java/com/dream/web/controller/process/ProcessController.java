@@ -15,27 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/test/PleaseLeave")
 public class ProcessController {
 
-    @Autowired
-    PleaseLeaveService pleaseLeaveService;
-    @Autowired
-    TaskService taskService;
-    @PostMapping
-    public AjaxResult myLeave(@Validated @RequestBody PleaseLeave pleaseLeave){
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        Integer assignee = ServletUtils.getParameterToInt("assignee");
-        pleaseLeave.setUserId(loginUser.getUserId().intValue());
-        pleaseLeave.setDeptId(loginUser.getDeptId().intValue());
-        boolean b = false;
-        try {
-            b = pleaseLeaveService.addLeave(pleaseLeave,assignee);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return AjaxResult.toAjax(b);
-    }
+
 
 
 }

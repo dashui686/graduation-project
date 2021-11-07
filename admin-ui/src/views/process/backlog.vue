@@ -17,16 +17,15 @@
     </el-form>
 
     <el-table v-loading="loading" :data="postList" >
-      <el-table-column label="流程名称" align="center" prop="processName" />
-      <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.processState"/>
-        </template>
-      </el-table-column>
-      
+       <el-table-column label="主题" align="center" prop="title">
+           <template slot-scope="scope">
+               {{scope.row.assigneeUser}} — {{scope.row.processName}} — {{scope.row.taskid}}
+           </template>
+       </el-table-column>
+      <el-table-column label="当前步骤" align="center" prop="taskname"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <router-link class="sidebar-logo-link" :to="'/process/processes/'+scope.row.processZip">
+          <router-link class="sidebar-logo-link" :to="'/process/processes/'+scope.row.processKey+'/'+scope.row.processInstanceId+'?taskId='+scope.row.taskid">
             <el-button
               size="mini"
               type="text"

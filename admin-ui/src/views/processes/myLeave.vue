@@ -1,19 +1,19 @@
 <template>
   <div class="continer">
     <div class="inner">
-    <el-form ref="leaveForm" :model="leaveFormData" :rules="rules" size="medium" label-width="100px">
-      <el-form-item label="请假类型" prop="type">
-        <el-select v-model="leaveFormData.type" placeholder="请选择请假类型" clearable :style="{width: '100%'}">
+    <el-form ref="leaveForm" :model="leaveFormData" :rules="isApprove?rules1:rules" size="medium" label-width="100px">
+      <el-form-item label="请假类型" prop="type" >
+        <el-select v-model="leaveFormData.type" placeholder="请选择请假类型" clearable :style="{width: '100%'}" :disabled="this.isApprove">
           <el-option v-for="(item, index) in typeOptions" :key="index" :label="item.label" :value="item.value"
             :disabled="item.disabled"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="开始时间" prop="beginDate">
-        <el-date-picker v-model="leaveFormData.beginDate"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+        <el-date-picker v-model="leaveFormData.beginDate" :disabled="this.isApprove"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
           :style="{width: '100%'}" placeholder="请选择开始时间" clearable></el-date-picker>
       </el-form-item>
       <el-form-item label="结束时间" prop="endDate">
-        <el-date-picker v-model="leaveFormData.endDate"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+        <el-date-picker v-model="leaveFormData.endDate" :disabled="this.isApprove"  type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
           :style="{width: '100%'}" placeholder="请选择结束时间" clearable></el-date-picker>
       </el-form-item>
       <el-form-item label="时长(小时)" prop="duration">
@@ -21,7 +21,7 @@
         </el-input-number>
       </el-form-item>
       <el-form-item label="请假理由" prop="reason">
-        <el-input v-model="leaveFormData.reason" type="textarea" placeholder="请输入请假理由"
+        <el-input :disabled="this.isApprove" v-model="leaveFormData.reason" type="textarea" placeholder="请输入请假理由"
           :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
       </el-form-item>
       <el-form-item label="审批人" prop="assignee">
@@ -30,9 +30,18 @@
             :value="item.value" :disabled="item.disabled"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item size="large">
+      <!-- <el-form-item label="审批理由" prop="approveReason" v-if="this.isApprove"> -->
+      <el-form-item label="审批理由" prop="approveReason" v-if="this.isApprove">
+        <el-input v-model="leaveFormData.approveReason" type="textarea" placeholder="请输入审批理由"
+          :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
+      </el-form-item>
+      <el-form-item size="large" v-if="!this.isApprove">
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
+      </el-form-item>
+      <el-form-item size="large" v-else>
+        <el-button type="primary" @click="Approve(true)">通过</el-button>
+        <el-button @click="Approve(false)">拒绝</el-button>
       </el-form-item>
     </el-form>
     </div>
@@ -40,7 +49,7 @@
 </template>
 <script>
 import { listByOption } from "@/api/system/user";
-import { addLeave } from "@/api/process/myLeave";
+import { addLeave,getBusiness,approveProcess } from "@/api/process/myLeave";
 
 export default {
   name:"myLeave",
@@ -48,6 +57,7 @@ export default {
   props: [],
   data() {
     return {
+      isApprove:false,
       leaveFormData: {
         type: undefined,
         beginDate: null,
@@ -55,6 +65,13 @@ export default {
         duration: undefined,
         reason: undefined,
         assignee: undefined,
+      },
+      rules1: {
+        approveReason: [{
+          required: true,
+          message: '请选择请假类型',
+          trigger: 'change'
+        }],
       },
       rules: {
         type: [{
@@ -98,19 +115,10 @@ export default {
         "label": "公干",
         "value": "公干"
       }],
-      assigneeOptions: [{
-        "label": "选项一",
-        "value": 1
-      }, {
-        "label": "选项二",
-        "value": 2
-      }],
+      assigneeOptions: [],
     }
   },
   computed: {
-    dayCount(){
-      return 1.1;
-    }
   },
   watch: {
     'leaveFormData.endDate':function(newValue,oldValue){
@@ -132,14 +140,51 @@ export default {
     },
   },
   created() {
-    listByOption().then(response => {
-      this.assigneeOptions = response.data
+    this.getOption();
+    console.log(this.$route)
+    this.$nextTick(()=>{
+    this.getBusi(this.$route.params.id);
+
     });
+    
   },
   mounted() {
     
   },
   methods: {
+    getBusi(id){
+      if(id == 0){
+        return ;
+      }else{
+        getBusiness(id).then(response => {
+          this.leaveFormData = response.data;
+          this.isApprove = true;
+
+        });
+      }
+      
+    },
+    getOption(){
+      listByOption().then(response => {
+        this.assigneeOptions = response.data
+      });
+    },
+    Approve(bool){
+      this.leaveFormData.processInstanceId = this.$route.params.id;
+      this.leaveFormData.state = this.leaveFormData.assignee?2:1;
+      this.leaveFormData.taskId = this.$route.query.taskId;
+      if(bool){
+      this.$refs['leaveForm'].validate(valid => {
+        if (!valid) return
+        // 提交同意表单
+        approveProcess(this.leaveFormData).then(res=>{
+          console.log(res);
+        })
+      })
+      }else{
+        console.log(2)
+      }
+    },
     getIntervalHour(startDate, endDate) {
             var ms = endDate.getTime() - startDate.getTime();
             if (ms < 0) return 0;

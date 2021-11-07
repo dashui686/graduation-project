@@ -26,7 +26,7 @@
       
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <router-link class="sidebar-logo-link" :to="'/process/processes/'+scope.row.processZip">
+          <router-link class="sidebar-logo-link" :to="'/process/processes/'+scope.row.processZip+'/0'">
             <el-button
               size="mini"
               type="text"
