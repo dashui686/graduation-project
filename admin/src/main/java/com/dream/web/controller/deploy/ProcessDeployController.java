@@ -118,7 +118,7 @@ public class ProcessDeployController {
                 .getClass()
                 .getClassLoader()
                 .getResourceAsStream(
-                        "processes/"+processDeploy1.getProcessZip()+".zip");
+                        "process/"+processDeploy1.getProcessZip()+".zip");
         if(inputStream == null){
             return  AjaxResult.error("部署文件不存在");
         }
