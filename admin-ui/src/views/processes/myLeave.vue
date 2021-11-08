@@ -171,13 +171,16 @@ export default {
     },
     Approve(bool){
       this.leaveFormData.processInstanceId = this.$route.params.id;
-      this.leaveFormData.state = this.leaveFormData.assignee?2:1;
+      this.leaveFormData.state = this.leaveFormData.assignee==undefined||this.leaveFormData.assignee==''?2:1;
+      console.log(this.leaveFormData.state)
+      
       this.leaveFormData.taskId = this.$route.query.taskId;
       if(bool){
       this.$refs['leaveForm'].validate(valid => {
         if (!valid) return
         // 提交同意表单
         approveProcess(this.leaveFormData).then(res=>{
+          this.$modal.msgSuccess("审批成功，请关闭页面");
           console.log(res);
         })
       })
@@ -196,7 +199,7 @@ export default {
         if (!valid) return
         // TODO 提交表单
         addLeave(this.leaveFormData).then(res=>{
-          console.log(res);
+           this.$modal.msgSuccess("申请成功");
         })
       })
     },

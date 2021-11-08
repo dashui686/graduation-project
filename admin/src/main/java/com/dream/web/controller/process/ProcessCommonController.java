@@ -7,8 +7,13 @@ import com.dream.common.utils.SecurityUtils;
 import com.dream.process.utils.ProcessUtils;
 import com.dream.system.service.ISysUserService;
 import com.dream.system.service.impl.SysUserServiceImpl;
+import net.bytebuddy.asm.Advice;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
@@ -30,6 +35,10 @@ public class ProcessCommonController {
 
     @Autowired
     TaskService taskService;
+    @Autowired
+    HistoryService historyService;
+    @Autowired
+    RuntimeService runtimeService;
     @Autowired
     ProcessUtils processUtils;
     @Autowired
@@ -80,6 +89,27 @@ public class ProcessCommonController {
         return AjaxResult.success(listmap);
     }
 
+
+    @GetMapping("/myProcessStart")
+    public AjaxResult myProcess(){
+        HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
+        List<HistoricProcessInstance> list = historicProcessInstanceQuery.list();
+        for (HistoricProcessInstance historicProcessInstance : list) {
+            System.out.println(historicProcessInstance.getStartUserId());
+            System.out.println(historicProcessInstance.getName());
+            System.out.println(historicProcessInstance.getDescription());
+            System.out.println(historicProcessInstance.getDeleteReason());
+            System.out.println(historicProcessInstance.getProcessDefinitionId());
+            System.out.println(historicProcessInstance.getProcessDefinitionKey());
+            System.out.println(historicProcessInstance.getId());
+            System.out.println(historicProcessInstance.getProcessDefinitionVersion());
+            System.out.println(historicProcessInstance.getSuperProcessInstanceId());
+            System.out.println(historicProcessInstance.getBusinessKey());
+            System.out.println(historicProcessInstance.getTenantId());
+            System.out.println("`````````````````````````````````````");
+        }
+        return AjaxResult.success();
+    }
 
     private Map<String,String> processMap(){
         List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().list();

@@ -66,11 +66,11 @@ public class PleaseLeaveServiceImpl extends ServiceImpl<PleaseLeaveMapper, Pleas
         if(save){
             Map<String,Object> map = new HashMap<>();
             map.put("assignee",pleaseLeave.getUserId());
-//            map.put("assignee",assignee);
+            Authentication.setAuthenticatedUserId(SecurityUtils.getUserId().toString());
             ProcessInstance myLeave = runtimeService.startProcessInstanceByKey("myLeave", pleaseLeave.getId().toString(),map);
         }else{
             save = false;
-            throw new Exception("启动流程错误");
+            throw new Exception("流程实例启动错误");
         }
         return save;
     }
@@ -79,11 +79,7 @@ public class PleaseLeaveServiceImpl extends ServiceImpl<PleaseLeaveMapper, Pleas
     @Transactional
     public PleaseLeave getBusiness(String id)  {
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(id).singleResult();
-        PleaseLeave byId = getById(processInstance.getBusinessKey());
-        if (byId == null){
-            return null;
-        }
-        return byId;
+        return getById(processInstance.getBusinessKey());
     }
 
     @Override

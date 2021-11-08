@@ -30,7 +30,8 @@ public class MyLeaveController {
         try {
             b = pleaseLeaveService.addLeave(pleaseLeave,assignee);
         } catch (Exception e) {
-            e.printStackTrace();
+            return AjaxResult.error(e.getMessage());
+
         }
         return AjaxResult.toAjax(b);
     }
@@ -46,6 +47,7 @@ public class MyLeaveController {
     @PostMapping("/approveProcess")
     public AjaxResult approveProcess(@Validated @RequestBody ProcessApproveVo processApproveVo){
         try {
+            System.out.println(processApproveVo);
             pleaseLeaveService.approvePleaseLeave(processApproveVo);
         } catch (TaskOfNullException e) {
             return AjaxResult.error(e.getMessage());
