@@ -23,35 +23,20 @@ public class MyLeaveController {
     @PostMapping
     public AjaxResult myLeave(@Validated @RequestBody PleaseLeave pleaseLeave){
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        Integer assignee = ServletUtils.getParameterToInt("assignee");
         pleaseLeave.setUserId(loginUser.getUserId().intValue());
         pleaseLeave.setDeptId(loginUser.getDeptId().intValue());
-        boolean b = false;
-        try {
-            b = pleaseLeaveService.addLeave(pleaseLeave,assignee);
-        } catch (Exception e) {
-            return AjaxResult.error(e.getMessage());
-
-        }
-        return AjaxResult.toAjax(b);
+        return pleaseLeaveService.addLeave(pleaseLeave);
     }
 
 
     @GetMapping("/getBusiness/{id}")
     public AjaxResult getBusiness(@PathVariable String id){
-
         PleaseLeave business = pleaseLeaveService.getBusiness(id);
         return AjaxResult.toAjax(business!=null,business);
     }
 
     @PostMapping("/approveProcess")
     public AjaxResult approveProcess(@Validated @RequestBody ProcessApproveVo processApproveVo){
-        try {
-            System.out.println(processApproveVo);
-            pleaseLeaveService.approvePleaseLeave(processApproveVo);
-        } catch (TaskOfNullException e) {
-            return AjaxResult.error(e.getMessage());
-        }
-        return AjaxResult.success();
+        return pleaseLeaveService.approvePleaseLeave(processApproveVo);
     }
 }

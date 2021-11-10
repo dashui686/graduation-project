@@ -42,6 +42,7 @@
       <el-form-item size="large" v-else>
         <el-button type="primary" @click="Approve(true)">通过</el-button>
         <el-button @click="Approve(false)">拒绝</el-button>
+        <el-button @click="aa(false)">拒绝</el-button>
       </el-form-item>
     </el-form>
     </div>
@@ -152,6 +153,26 @@ export default {
     
   },
   methods: {
+    aa(){
+     this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+        if (this.isActive(view)) {
+          this.toLastView(visitedViews, view)
+        }
+      })
+      // const tags = this.$refs.tag
+      // this.$nextTick(() => {
+      //   for (const tag of tags) {
+      //     if (tag.to.path === this.$route.path) {
+      //       this.$refs.scrollPane.moveToTarget(tag)
+      //       // when query is different then update
+      //       if (tag.to.fullPath !== this.$route.fullPath) {
+      //         this.$store.dispatch('tagsView/updateVisitedView', this.$route)
+      //       }
+      //       break
+      //     }
+      //   }
+      // })
+    },
     getBusi(id){
       if(id == 0){
         return ;

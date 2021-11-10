@@ -106,6 +106,7 @@ public class ProcessCommonController {
             System.out.println(historicProcessInstance.getSuperProcessInstanceId());
             System.out.println(historicProcessInstance.getBusinessKey());
             System.out.println(historicProcessInstance.getTenantId());
+            System.out.println(processMap().get(historicProcessInstance.getProcessDefinitionKey()));
             System.out.println("`````````````````````````````````````");
         }
         return AjaxResult.success();

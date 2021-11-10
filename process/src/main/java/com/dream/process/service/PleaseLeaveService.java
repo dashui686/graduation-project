@@ -1,5 +1,6 @@
 package com.dream.process.service;
 
+import com.dream.common.core.domain.AjaxResult;
 import com.dream.process.domain.PleaseLeave;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dream.process.entity.ProcessApproveVo;
@@ -12,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PleaseLeaveService extends IService<PleaseLeave> {
 
     @Transactional
-    boolean addLeave(PleaseLeave pleaseLeave, Integer assignee) throws Exception;
+    AjaxResult addLeave(PleaseLeave pleaseLeave);
 
-    @Transactional
     PleaseLeave getBusiness(String id);
 
-    void approvePleaseLeave(ProcessApproveVo processApproveVo) throws TaskOfNullException;
+    AjaxResult approvePleaseLeave(ProcessApproveVo processApproveVo) ;
 
-    void unApprovePleaseLeave(ProcessApproveVo processApproveVo) throws TaskOfNullException;
+    AjaxResult unApprovePleaseLeave(ProcessApproveVo processApproveVo);
 }

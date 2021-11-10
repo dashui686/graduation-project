@@ -11,7 +11,7 @@
     <description>OA办公管理系统</description>
     
     <properties>
-        <ruoyi.version>1.0.0</ruoyi.version>
+        <dream.version>1.0.0</dream.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -195,46 +195,46 @@
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>quartz</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>generator</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>framework</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>system</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>process</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>common</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.dream</groupId>
                 <artifactId>drp</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${dream.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
