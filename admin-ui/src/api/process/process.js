@@ -20,10 +20,11 @@ export function getProcessDeploy(processId) {
 }
 
 // 查询待办任务，根据用户ID
-export function getMyProcess() {
+export function getMyProcess(query) {
   return request({
     url: '/test/process/myProcess',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 

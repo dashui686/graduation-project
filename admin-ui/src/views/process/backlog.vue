@@ -91,8 +91,8 @@ export default {
       this.loading = true;
       getMyProcess(this.queryParams).then(res =>{
         console.log(res)
-        this.postList = res.data;
-        // this.total = res.data.total;
+        this.postList = res.data.records;
+        this.total = res.data.total;
         this.loading = false;
       })
     },
