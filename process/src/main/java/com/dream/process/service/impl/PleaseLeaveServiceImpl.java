@@ -2,8 +2,10 @@ package com.dream.process.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dream.common.core.domain.AjaxResult;
+import com.dream.common.core.domain.model.LoginUser;
 import com.dream.common.utils.SecurityUtils;
 import com.dream.process.domain.PleaseLeave;
+import com.dream.process.domain.TbFlow;
 import com.dream.process.entity.ProcessApproveVo;
 import com.dream.process.exception.TaskOfNullException;
 import com.dream.process.service.PleaseLeaveService;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,8 @@ public class PleaseLeaveServiceImpl extends ServiceImpl<PleaseLeaveMapper, Pleas
     @Override
     @Transactional
     public AjaxResult addLeave(PleaseLeave pleaseLeave) {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+
         boolean save = save(pleaseLeave);
         Map<String,Object> map = new HashMap<>();
         map.put("assignee",pleaseLeave.getUserId());
@@ -53,7 +58,27 @@ public class PleaseLeaveServiceImpl extends ServiceImpl<PleaseLeaveMapper, Pleas
             Task task = taskService.createTaskQuery().processInstanceId(myLeave.getProcessInstanceId()).singleResult();
             System.out.println(task);
             ProcessApproveVo processApproveVo = new ProcessApproveVo(pleaseLeave.getAssignee(), myLeave.getProcessInstanceId(), task.getId(), "", "1");
-            return approvePleaseLeave(processApproveVo);
+            AjaxResult ajaxResult = approvePleaseLeave(processApproveVo);
+
+            Task taskOnlie = taskService.createTaskQuery().processInstanceId(myLeave.getProcessInstanceId()).singleResult();
+            TbFlow tbFlow = new TbFlow();
+            tbFlow.setAssignee(pleaseLeave.getAssignee());
+            tbFlow.setBusinessKey(pleaseLeave.getId().toString());
+            tbFlow.setCreateDate(LocalDateTime.now());
+            tbFlow.setCreateUserId(loginUser.getUserId().toString());
+            tbFlow.setCreateUserName(loginUser.getUser().getNickName());
+            tbFlow.setProcessInstanceDefinitionKey(myLeave.getProcessDefinitionKey());
+            tbFlow.setProcessInstanceDefinitionName(myLeave.getProcessDefinitionName());
+            tbFlow.setProcessInstanceId(myLeave.getProcessInstanceId());
+            tbFlow.setTaskId(taskOnlie.getId());
+            tbFlow.setTaskNaem(taskOnlie.getName());
+            tbFlow.setProcessState(1);
+            boolean insert = tbFlow.insert();
+            if(insert){
+                return ajaxResult;
+            }else{
+                return AjaxResult.error("流程启动失败");
+            }
         }else{
             return AjaxResult.error("流程启动失败");
         }

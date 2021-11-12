@@ -218,6 +218,7 @@ export default {
       console.log(this)
       this.$refs['leaveForm'].validate(valid => {
         if (!valid) return
+        if (this.leaveFormData.duration <=0 ) return
         // TODO 提交表单
         addLeave(this.leaveFormData).then(res=>{
            this.$modal.msgSuccess("申请成功");

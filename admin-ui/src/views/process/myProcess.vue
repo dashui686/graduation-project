@@ -17,13 +17,25 @@
     </el-form>
 
     <el-table v-loading="loading" :data="postList" >
-      <el-table-column label="流程名称" align="center" prop="processName" />
-      <el-table-column label="状态" align="center" prop="status"> 
+       <el-table-column label="流程名称" align="center" prop="title">
+           <template slot-scope="scope">
+               {{scope.row.processInstanceDefinitionName}} — {{scope.row.createUserName}} — {{scope.row.processInstanceId}}
+           </template>
+       </el-table-column>
+      <el-table-column label="当前流程" align="center" prop="status"> 
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.processState"/>
+          <el-tag>{{scope.row.taskNaem}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="流程状态" align="center" prop="processName" />
+      <el-table-column label="流程状态" align="center" prop="processName" >
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.processState == 1">审批中</el-tag>
+          <el-tag v-else-if="scope.row.processState == 2" type="success">审批通过</el-tag>
+          <el-tag v-else type="danger">审批拒绝：{{scope.row.reason}}</el-tag>
+
+          
+        </template>
+      </el-table-column>
       
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -49,7 +61,7 @@
 </template>
 
 <script>
-import { deploy,unDeploy,listProcess,getProcessDeploy,addProcessDeploy,updateProcessDeploy,delProcessDeploy } from "@/api/process/process.js";
+import { myProcessStart } from "@/api/process/process.js";
 import AppLink from '../../layout/components/Sidebar/Link.vue'
 
 export default {
@@ -91,7 +103,7 @@ export default {
     /** 查询岗位列表 */
     getList() {
       this.loading = true;
-      listProcess(this.queryParams).then(res =>{
+      myProcessStart(this.queryParams).then(res =>{
         console.log(res)
         this.postList = res.data.records;
         this.total = res.data.total;

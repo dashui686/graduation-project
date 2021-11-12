@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.process.mapper.TbFlowMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.process.domain.TbFlow">
+            <id property="id" column="Id" jdbcType="INTEGER"/>
+            <result property="processInstanceId" column="ProcessInstanceId" jdbcType="VARCHAR"/>
+            <result property="processInstanceDefinitionKey" column="ProcessInstanceDefinitionKey" jdbcType="VARCHAR"/>
+            <result property="processInstanceDefinitionName" column="ProcessInstanceDefinitionName" jdbcType="VARCHAR"/>
+            <result property="taskId" column="TaskId" jdbcType="VARCHAR"/>
+            <result property="taskNaem" column="TaskNaem" jdbcType="VARCHAR"/>
+            <result property="createUserId" column="CreateUserId" jdbcType="VARCHAR"/>
+            <result property="createUserName" column="CreateUserName" jdbcType="VARCHAR"/>
+            <result property="assignee" column="Assignee" jdbcType="VARCHAR"/>
+            <result property="roles" column="Roles" jdbcType="VARCHAR"/>
+            <result property="businessKey" column="BusinessKey" jdbcType="VARCHAR"/>
+            <result property="processState" column="ProcessState" jdbcType="INTEGER"/>
+            <result property="reason" column="Reason" jdbcType="VARCHAR"/>
+            <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Id,ProcessInstanceId,ProcessInstanceDefinitionKey,
+        ProcessInstanceDefinitionName,TaskId,TaskNaem,
+        CreateUserId,CreateUserName,Assignee,
+        Roles,BusinessKey,ProcessState,
+        Reason,CreateDate
+    </sql>
+</mapper>

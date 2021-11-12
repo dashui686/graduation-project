@@ -28,6 +28,16 @@ export function getMyProcess() {
 }
 
 
+// 查询 个人发起任务
+export function myProcessStart(query) {
+  return request({
+    url: '/test/process/myProcessStart',
+    method: 'get',
+    params: query
+  })
+}
+
+
 
 
 // 新增岗位
