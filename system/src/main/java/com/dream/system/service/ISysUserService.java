@@ -12,6 +12,12 @@ import com.dream.common.core.domain.entity.SysUser;
  */
 public interface ISysUserService
 {
+
+    /**
+     * 查询用户
+     */
+    public List<SysUser> queryUserInfo(SysUser sysUser);
+
     /**
      * 根据条件分页查询用户列表
      * 

@@ -62,6 +62,16 @@ public class SysUserController extends BaseController
     }
 
     /**
+     * 查询用户信息
+     * @return
+     */
+    @GetMapping("/userInfo")
+    public List<SysUser> userInfo(SysUser sysUser){
+        return userService.queryUserInfo(sysUser);
+    }
+
+
+    /**
      * 获取用户列表
      */
     @PreAuthorize("@ss.hasPermi('system:user:listByOption')")
