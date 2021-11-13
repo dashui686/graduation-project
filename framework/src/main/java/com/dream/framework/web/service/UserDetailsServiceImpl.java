@@ -1,5 +1,6 @@
 package com.dream.framework.web.service;
 
+import com.dream.common.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
+
         SysUser user = userService.selectUserByUserName(username);
         if (StringUtils.isNull(user))
         {

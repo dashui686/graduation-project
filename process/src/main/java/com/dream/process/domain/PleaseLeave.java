@@ -69,6 +69,9 @@ public class PleaseLeave  implements Serializable {
     @TableField(value = "Reason")
     private String reason;
 
+    /**
+     * 审批人
+     */
     @TableField(exist = false)
     private String Assignee;
 
