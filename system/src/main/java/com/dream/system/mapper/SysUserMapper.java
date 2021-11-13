@@ -14,6 +14,13 @@ import com.dream.common.core.domain.entity.SysUser;
  */
 public interface SysUserMapper
 {
+
+    /**
+     * 查询用户
+     */
+    public List<SysUser> queryUserInfo(@Param("user") SysUser sysUser);
+
+
     /**
      * 根据条件分页查询用户列表
      * 
