@@ -58,7 +58,7 @@ public class ProcessUtils {
      */
     public ProcessInstance createInstance(String definitionKey,String businessKey,Map<String,Object> data){
         Authentication.setAuthenticatedUserId(SecurityUtils.getUserId().toString());
-        return runtimeService.startProcessInstanceByKey("myLeave",businessKey ,data);
+        return runtimeService.startProcessInstanceByKey(definitionKey,businessKey ,data);
     }
 
     /**
@@ -97,5 +97,27 @@ public class ProcessUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+
+    public Map<String,Object> taskToMap(Task task){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("taskid", task.getId());
+        map.put("taskname", task.getName());
+        map.put("description", task.getDescription());
+        map.put("priority", task.getPriority());
+        map.put("owner", task.getOwner());
+        map.put("assignee", task.getAssignee());
+        map.put("delegationState", task.getDelegationState());
+        map.put("processInstanceId", task.getProcessInstanceId());
+        map.put("executionId", task.getExecutionId());
+        map.put("processDefinitionId", task.getProcessDefinitionId());
+        map.put("createTime", task.getCreateTime());
+        map.put("taskDefinitionKey", task.getTaskDefinitionKey());
+        map.put("dueDate", task.getDueDate());
+        map.put("category", task.getCategory());
+        map.put("parentTaskId", task.getParentTaskId());
+        map.put("tenantId", task.getTenantId());
+        return map;
     }
 }

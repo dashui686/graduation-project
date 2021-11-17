@@ -64,7 +64,8 @@ public class ProcessCommonController {
     @GetMapping("/myProcess")
     public AjaxResult getMyProcess(){
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        Page<TbFlow> page = new Page<>(pageDomain.getPageNum(), pageDomain.getPageNum());
+        System.out.println(pageDomain);
+        Page<TbFlow> page = new Page<>(pageDomain.getPageNum(), pageDomain.getPageSize());
         QueryWrapper<TbFlow> createUserId1 = new QueryWrapper<TbFlow>().eq("Assignee", SecurityUtils.getUserId());
         Page<TbFlow> createUserId = tbFlowService.page(page, createUserId1);
         return AjaxResult.success(createUserId);
@@ -114,7 +115,7 @@ public class ProcessCommonController {
     @GetMapping("/myProcessStart")
     public AjaxResult myProcess(){
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        Page<TbFlow> page = new Page<>(pageDomain.getPageNum(), pageDomain.getPageNum());
+        Page<TbFlow> page = new Page<>(pageDomain.getPageNum(), pageDomain.getPageSize());
         QueryWrapper<TbFlow> createUserId1 = new QueryWrapper<TbFlow>().eq("CreateUserId", SecurityUtils.getUserId());
         Page<TbFlow> createUserId = tbFlowService.page(page, createUserId1);
         return AjaxResult.success(createUserId);

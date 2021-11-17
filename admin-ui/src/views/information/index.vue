@@ -30,14 +30,15 @@
           </el-form>
     </div>
     <div class="div2">
-      <div id="userInfo" v-for="item in userList">
+      <div id="userInfo" v-for="item in userList" :key="item.id">
         <!--        头像-->
         <div id="avatar" >
           <el-row class="demo-avatar demo-basic">
             <el-col :span="12">
               <div class="demo-basic--circle">
                 <div class="block">
-                  <el-avatar :size="50" :src="item.avatar"></el-avatar>
+                  <img :src="'/dev-api'+item.avatar" class="user-avatar">
+                  <!-- <el-avatar :size="50" :src="item.avatar"></el-avatar> -->
                 </div>
               </div>
             </el-col>
@@ -141,5 +142,14 @@
   }
   .div2{
     flex-wrap: wrap;
+  }
+
+  
+  .user-avatar {
+    
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 </style>

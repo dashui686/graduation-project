@@ -79,4 +79,26 @@
          where g.GoodsId = #{id}
     </select>
 
+    <select id="getListByIds" resultType="drpGoods" parameterType="object">
+        select <include refid="Base_Column_List_g"></include>,ww.WarehouseId,ww.WarehouseName,gt.goodsTypeName
+        from drp_goods as g
+        LEFT JOIN
+        drp_goods_warehouse w
+        on
+        w.GoodsId = g.GoodsId
+        left join
+        drp_warehouse ww
+        on
+        w.WarehouseId = ww.WarehouseId
+        left join
+        drp_goodstype as gt
+        on
+        g.GoodsTypeId = gt.GoodsTypeId
+        where g.GoodsId in
+        <foreach item="item" index="index" collection="list"
+                                     open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

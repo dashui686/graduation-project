@@ -8,7 +8,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -16,6 +19,8 @@ import lombok.Data;
  */
 @TableName(value ="tb_flow")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TbFlow extends Model<TbFlow> implements Serializable {
     /**
      * id
@@ -98,6 +103,7 @@ public class TbFlow extends Model<TbFlow> implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "CreateDate")
     private LocalDateTime createDate;
 
@@ -115,6 +121,139 @@ public class TbFlow extends Model<TbFlow> implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
+    }
+
+    public String getProcessInstanceDefinitionKey() {
+        return processInstanceDefinitionKey;
+    }
+
+    public void setProcessInstanceDefinitionKey(String processInstanceDefinitionKey) {
+        this.processInstanceDefinitionKey = processInstanceDefinitionKey;
+    }
+
+    public String getProcessInstanceDefinitionName() {
+        return processInstanceDefinitionName;
+    }
+
+    public void setProcessInstanceDefinitionName(String processInstanceDefinitionName) {
+        this.processInstanceDefinitionName = processInstanceDefinitionName;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskNaem() {
+        return taskNaem;
+    }
+
+    public void setTaskNaem(String taskNaem) {
+        this.taskNaem = taskNaem;
+    }
+
+    public String getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(String createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public String getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public String getBusinessKey() {
+        return businessKey;
+    }
+
+    public void setBusinessKey(String businessKey) {
+        this.businessKey = businessKey;
+    }
+
+    public Integer getProcessState() {
+        return processState;
+    }
+
+    public void setProcessState(Integer processState) {
+        this.processState = processState;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCandidateUsers() {
+        return candidateUsers;
+    }
+
+    public void setCandidateUsers(String candidateUsers) {
+        this.candidateUsers = candidateUsers;
+    }
+
+    public String getCandidateGroups() {
+        return candidateGroups;
+    }
+
+    public void setCandidateGroups(String candidateGroups) {
+        this.candidateGroups = candidateGroups;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     @Override
     public boolean equals(Object that) {

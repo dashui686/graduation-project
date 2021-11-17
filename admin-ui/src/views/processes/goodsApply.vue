@@ -52,8 +52,8 @@
           </el-table-column>
         </el-table>
       </el-form-item>
-      <el-form-item label="申请理由" prop="field102">
-        <el-input v-model="goodsFormData.field102" type="textarea" placeholder="请输入申请理由"
+      <el-form-item label="申请理由" prop="reason">
+        <el-input v-model="goodsFormData.reason" type="textarea" placeholder="请输入申请理由"
           :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
       </el-form-item>
       <el-form-item label="审批人" prop="assignee">
@@ -70,29 +70,29 @@
 
 
           <el-dialog :visible.sync="dialogFormVisible" @close="onClose" title="添加物品">
-      <el-form ref="goodsForm" :model="goodsFormDataDialog" :rules="goodsDialog" size="medium" label-width="100px">
+      <el-form ref="goodsForms" :model="goodsFormDataDialog" :rules="goodsDialog" size="medium" label-width="100px">
         <el-form-item label="仓库选择" prop="warehouseId">
           <el-select v-model="goodsFormDataDialog.warehouseId" placeholder="请选择仓库选择" clearable
             :style="{width: '100%'}">
             <el-option v-for="(item, index) in warehouseIdOptions" :key="index" :label="item.label"
-              :value="item.value" :disabled="item.disabled"></el-option>
+              :value="item.id" :disabled="item.disabled"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="物品选择" prop="goodsId">
           <el-select v-model="goodsFormDataDialog.goodsId" placeholder="请选择物品" clearable :style="{width: '100%'}">
-            <el-option v-for="(item, index) in goodsIdOptions" :key="index" :label="item.label"
-              :value="item.value" :disabled="item.disabled"></el-option>
+            <el-option v-for="(item, index) in goodsIdOptions" :key="index" :label="item.goodsName"
+              :value="item.goodsId" :disabled="item.disabled"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="数量" prop="count">
-          <el-input-number v-model="goodsFormDataDialog.count" placeholder="数量" :step='1'></el-input-number>
+          <el-input-number v-model="goodsFormDataDialog.count" :min="0" :max="goodsMax" placeholder="数量" :step='1'></el-input-number>
         </el-form-item>
         <el-form-item label="单位" prop="goodsUnit">
           <el-input v-model="goodsFormDataDialog.goodsUnit" placeholder="请选择物品" :disabled='true' clearable
             :style="{width: '100%'}"></el-input>
         </el-form-item>
-        <el-form-item label="物品分类" prop="goodsTypeId">
-          <el-input v-model="goodsFormDataDialog.goodsTypeId" placeholder="请选择物品" :disabled='true' clearable
+        <el-form-item label="物品分类" prop="goodsTypeName">
+          <el-input v-model="goodsFormDataDialog.goodsTypeName" placeholder="请选择物品" :disabled='true' clearable
             :style="{width: '100%'}"></el-input>
         </el-form-item>
       </el-form>
@@ -105,20 +105,24 @@
 </template>
 <script>
 import {  treeselect as warehouseTreeselect } from "@/api/drp/warehouse";
-
+  import {  queryByWarehouseId } from "@/api/drp/goods";
 export default {
   name:"goodsApply",
   components: {},
   props: [],
+
   data() {
+
+
     return {
 
+       goodsMax:0,
        goodsFormDataDialog: {
         warehouseId: undefined,
         goodsId: undefined,
-        count: undefined,
+        count: 0,
         goodsUnit: undefined,
-        goodsTypeId: undefined,
+        goodsTypeName: undefined,
       },
       goodsDialog: {
         warehouseId: [{
@@ -147,20 +151,8 @@ export default {
           trigger: 'blur'
         }],
       },
-      warehouseIdOptions: [{
-        "label": "选项一",
-        "value": 1
-      }, {
-        "label": "选项二",
-        "value": 2
-      }],
-      goodsIdOptions: [{
-        "label": "选项一",
-        "value": 1
-      }, {
-        "label": "选项二",
-        "value": 2
-      }],
+      warehouseIdOptions: [],
+      goodsIdOptions: [],
 
       dialogFormVisible:false,
       formLabelWidth:'120px',
@@ -168,12 +160,12 @@ export default {
 
       },
       goodsFormData: {
-        field102: undefined,
+        reason: undefined,
         assignee: undefined,
         tableData:undefined,
       },
       goods: {
-        field102: [{
+        reason: [{
           required: true,
           message: '请输入申请理由',
           trigger: 'blur'
@@ -191,30 +183,52 @@ export default {
         }
         ]
       },
-      assigneeOptions: [{
-        "label": "选项一",
-        "value": 1
-      }, {
-        "label": "选项二",
-        "value": 2
-      }],
+      assigneeOptions: [],
     }
   },
   computed: {},
-  watch: {},
+    watch:{
+    'goodsFormDataDialog.warehouseId':{
+      handler (newVal) {
+        if(newVal != undefined){
+          this.goodsIdOptions = [];
+          queryByWarehouseId(newVal).then(res=>{
+          this.goodsIdOptions = res.data; 
+          })
+        }
+	      
+      },
+      deep: true,
+      immediate: true
+    },
+    'goodsFormDataDialog.goodsId':function(newVal){
+      if(newVal ==undefined) return ;
+      this.goodsFormDataDialog.count = 0;
+      console.log(newVal);
+      let a = this.goodsIdOptions.find(obj=>{
+        return obj.goodsId == newVal;
+      })
+      console.log(a);
+      this.goodsMax = a.goodsCount;
+      this.goodsFormDataDialog.goodsUnit = a.goodsUnit;
+      this.goodsFormDataDialog.goodsTypeName = a.goodsTypeName;
+
+    }
+  },
   created() {
     this.warehouseTreeselectList();
   },
   mounted() {},
   methods: {
     onClose() {
-      this.$refs['goodsForm'].resetFields()
+      this.$refs['goodsForms'].resetFields()
     },
     close() {
-      this.$emit('update:visible', false)
+      this.$refs['goodsForms'].resetFields()
+      this.dialogFormVisible=false;
     },
     handelConfirm() {
-      this.$refs['goodsForm'].validate(valid => {
+      this.$refs['goodsForms'].validate(valid => {
         if (!valid) return
         this.close()
       })
@@ -224,7 +238,12 @@ export default {
     },
     warehouseTreeselectList(){
       warehouseTreeselect().then(res=>{
-        console.log(res);
+        this.warehouseIdOptions = res.data;
+      })
+    },
+    goodsTreeselectList(){
+      warehouseTreeselect().then(res=>{
+        this.warehouseIdOptions = res.data;
       })
     },
     submitForm() {

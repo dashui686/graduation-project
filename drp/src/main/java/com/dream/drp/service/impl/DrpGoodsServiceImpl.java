@@ -98,6 +98,11 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
         boolean goodsId = goodsWarehouseService.remove(new UpdateWrapper<DrpGoodsWarehouse>().in("GoodsId", id));
         return AjaxResult.toAjax(data&&goodsId);
     }
+
+    @Override
+    public List<DrpGoods> getListByIds(List<Object> list) {
+        return drpGoodsMapper.getListByIds(list);
+    }
 }
 
 

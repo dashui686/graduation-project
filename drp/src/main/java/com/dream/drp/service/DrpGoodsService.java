@@ -5,6 +5,7 @@ import com.dream.common.core.page.PageDomain;
 import com.dream.drp.Exception.GoodsIsExist;
 import com.dream.drp.domain.DrpGoods;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public interface DrpGoodsService extends IService<DrpGoods> {
      */
     public AjaxResult remove(Long[] id);
 
+    List<DrpGoods> getListByIds(@Param("list") List<Object> list);
 
 
 }

@@ -29,8 +29,8 @@
       </el-table-column>
       <el-table-column label="流程状态" align="center" prop="processName" >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.processState == 1">审批中</el-tag>
-          <el-tag v-else-if="scope.row.processState == 2" type="success">审批通过</el-tag>
+          <el-tag v-if="scope.row.processState == 0">审批中</el-tag>
+          <el-tag v-else-if="scope.row.processState == 1" type="success">审批通过</el-tag>
           <el-tag v-else type="danger">审批拒绝：{{scope.row.reason}}</el-tag>
 
           
@@ -39,12 +39,12 @@
       
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <router-link class="sidebar-logo-link" :to="'/process/processes/'+scope.row.processZip+'/0'">
+          <router-link class="sidebar-logo-link" :to="'/process/processes/'+scope.row.processInstanceDefinitionKey+'/0?bskey='+scope.row.businessKey">
             <el-button
               size="mini"
               type="text"
               icon="el-icon-edit"
-            >发起流程</el-button>
+            >查看</el-button>
           </router-link>
         </template>
       </el-table-column>

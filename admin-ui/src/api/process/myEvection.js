@@ -4,7 +4,7 @@ import request from '@/utils/request'
 // 新增业务
 export function addLeave(data) {
     return request({
-      url: '/test/PleaseLeave',
+      url: '/test/evection',
       method: 'post',
       data: data
     })
@@ -15,7 +15,7 @@ export function addLeave(data) {
   // 查询业务
   export function getBusiness(id){
     return request({
-      url:"/test/PleaseLeave/getBusiness/"+id,
+      url:"/test/evection/getBusiness/"+id,
       method:"get",
 
     })
@@ -23,7 +23,7 @@ export function addLeave(data) {
   // 查询业务
   export function getById(id){
     return request({
-      url:"/test/PleaseLeave/"+id,
+      url:"/test/evection/"+id,
       method:"get",
 
     })
@@ -33,7 +33,7 @@ export function addLeave(data) {
     // 查询业务
     export function approveProcess(data){
       return request({
-        url:"/test/PleaseLeave/approveProcess",
+        url:"/test/evection/approveProcess",
         method:"post",
         data
       })

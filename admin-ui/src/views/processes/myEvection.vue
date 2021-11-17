@@ -2,8 +2,8 @@
   <div class="continer">
     <div class="inner">
     <el-form ref="leaveForm" :model="leaveFormData" :rules="isApprove?rules1:rules" size="medium" label-width="100px">
-      <el-form-item label="请假类型" prop="type" >
-        <el-select v-model="leaveFormData.type" placeholder="请选择请假类型" clearable :style="{width: '100%'}" :disabled="this.isApprove">
+      <el-form-item label="出差类型" prop="type" >
+        <el-select v-model="leaveFormData.type" placeholder="请选择出差类型" clearable :style="{width: '100%'}" :disabled="this.isApprove">
           <el-option v-for="(item, index) in typeOptions" :key="index" :label="item.label" :value="item.value"
             :disabled="item.disabled"></el-option>
         </el-select>
@@ -20,7 +20,7 @@
         <el-input-number v-model="leaveFormData.duration" disabled placeholder="时长(小时)" :step='1' :precision='2'>
         </el-input-number>
       </el-form-item>
-      <el-form-item label="请假理由" prop="reason">
+      <el-form-item label="出差理由" prop="reason">
         <el-input :disabled="this.isApprove" v-model="leaveFormData.reason" type="textarea" placeholder="请输入请假理由"
           :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
       </el-form-item>
@@ -49,7 +49,7 @@
 </template>
 <script>
 import { listByOption } from "@/api/system/user";
-import { addLeave,getBusiness,approveProcess,getById } from "@/api/process/myLeave";
+import { addLeave,getBusiness,approveProcess,getById } from "@/api/process/myEvection";
 
 export default {
   name:"myLeave",
@@ -97,7 +97,7 @@ export default {
         }],
         reason: [{
           required: true,
-          message: '请输入请假理由',
+          message: '请输入出差理由',
           trigger: 'blur'
         }],
         assignee: [{
@@ -107,14 +107,14 @@ export default {
         }],
       },
       typeOptions: [{
-        "label": "事假",
-        "value": "事假"
+        "label": "公派",
+        "value": "公派"
       }, {
-        "label": "病假",
-        "value": "病假"
+        "label": "私人",
+        "value": "私人"
       }, {
-        "label": "公干",
-        "value": "公干"
+        "label": "调职",
+        "value": "调职"
       }],
       assigneeOptions: [],
     }

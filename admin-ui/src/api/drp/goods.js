@@ -11,6 +11,14 @@ export function listGoods(query) {
   })
 }
 
+// 查询所有 参数
+export function queryByWarehouseId(id) {
+  return request({
+    url: '/test/drpGoods/treeSelectByWarehouseId/'+id,
+    method: 'get',
+  })
+}
+
 // 查询商品
 export function getOneGoods(id) {
   return request({

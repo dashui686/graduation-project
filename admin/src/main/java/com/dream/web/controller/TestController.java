@@ -19,6 +19,7 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -83,10 +84,10 @@ public class TestController {
      * 查询所有流程中的业务
      * @return
      */
-    @GetMapping("/3")
-    public AjaxResult test3(){
+    @GetMapping("/un/{name}")
+    public AjaxResult test3(@PathVariable String name){
         List<ProcessInstance> myLeave =
-                runtimeService.createProcessInstanceQuery().processDefinitionKey("myLeave").list();
+                runtimeService.createProcessInstanceQuery().processDefinitionKey(name).list();
         Stream<Map<String,Object>> objectStream = myLeave.stream().map(obj ->{
             Map<String, Object> stringObjectMap = null;
             try {
