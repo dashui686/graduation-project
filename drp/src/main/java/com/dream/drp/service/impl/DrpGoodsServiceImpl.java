@@ -70,7 +70,7 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
     public AjaxResult add(DrpGoods drpGoods) throws GoodsIsExist {
         boolean save = save(drpGoods);
         boolean insert = goodsWarehouseService.save(new DrpGoodsWarehouse(drpGoods.getGoodsId(), drpGoods.getWarehouseId()));
-        return AjaxResult.success(save&&insert);
+        return AjaxResult.toAjax(save&&insert);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class DrpGoodsServiceImpl extends ServiceImpl<DrpGoodsMapper, DrpGoods>
 
         boolean data = removeByIds(Collections.arrayToList(id));
         boolean goodsId = goodsWarehouseService.remove(new UpdateWrapper<DrpGoodsWarehouse>().in("GoodsId", id));
-        return AjaxResult.success(data&&goodsId);
+        return AjaxResult.toAjax(data&&goodsId);
     }
 }
 

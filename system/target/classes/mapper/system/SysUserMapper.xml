@@ -123,6 +123,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <include refid="selectUserVo"/>
 		where u.user_name = #{userName}
 	</select>
+
+	<select id="selectUserByOptions" resultType="map">
+		select user_id as value  ,user_name as label from sys_user
+	</select>
 	
 	<select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
 		<include refid="selectUserVo"/>
@@ -216,5 +220,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			#{userId}
         </foreach> 
  	</delete>
-	
+
+	<select id="queryUserInfo" resultType="sysUser" parameterType="sysUser">
+		select * from sys_user
+		<if test="user!=null">
+			<where>
+				<if test="user.nickName!='' and user.nickName!=null">
+					<bind name="aa" value="'%'+user.nickName+'%'"/>
+					nick_Name like #{aa}
+				</if>
+				<if test="user.phonenumber!='' and user.phonenumber!=null">
+					<bind name="phone" value="'%'+user.phonenumber+'%'"/>
+					phonenumber like #{phone}
+				</if>
+			</where>
+		</if>
+	</select>
 </mapper> 
