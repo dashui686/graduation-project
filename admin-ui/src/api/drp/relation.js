@@ -47,5 +47,12 @@ export function delRelation(id) {
   })
 }
 
+// 查询树形值
+export function treeSelect2() {
+  return request({
+    url: '/test/relation/supplier/treeSelect',
+    method: 'get'
+  })
+}
 
 

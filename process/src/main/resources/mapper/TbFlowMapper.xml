@@ -19,6 +19,8 @@
             <result property="processState" column="ProcessState" jdbcType="INTEGER"/>
             <result property="reason" column="Reason" jdbcType="VARCHAR"/>
             <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+            <result property="candidateUsers" column="CandidateUsers" jdbcType="VARCHAR"/>
+            <result property="candidateGroups" column="CandidateGroups" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -26,6 +28,7 @@
         ProcessInstanceDefinitionName,TaskId,TaskNaem,
         CreateUserId,CreateUserName,Assignee,
         Roles,BusinessKey,ProcessState,
-        Reason,CreateDate
+        Reason,CreateDate,CandidateUsers,
+        CandidateGroups
     </sql>
 </mapper>

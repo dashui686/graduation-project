@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.process.mapper.TbConferenceroomMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.process.domain.TbConferenceroom">
+            <id property="id" column="Id" jdbcType="INTEGER"/>
+            <result property="name" column="Name" jdbcType="VARCHAR"/>
+            <result property="capacity" column="Capacity" jdbcType="INTEGER"/>
+            <result property="position" column="Position" jdbcType="VARCHAR"/>
+            <result property="state" column="State" jdbcType="OTHER"/>
+            <result property="createUserId" column="CreateUserId" jdbcType="INTEGER"/>
+            <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+            <result property="updateUserId" column="UpdateUserId" jdbcType="INTEGER"/>
+            <result property="updateDate" column="UpdateDate" jdbcType="TIMESTAMP"/>
+            <result property="image" column="Image" jdbcType="VARCHAR"/>
+            <result property="additional" column="Additional" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Id,Name,Capacity,
+        Position,State,CreateUserId,
+        CreateDate,UpdateUserId,UpdateDate,
+        Image,Additional
+    </sql>
+
+    <select id="queryInfo" resultType="tbConferenceroom" parameterType="tbConferenceroom">
+        select * from tb_conferenceroom
+        <if test="conference != null">
+            <where>
+                <if test="conference.name != null and conference.name != ''">
+                    <bind name="name" value="'%'+conference.name+'%'"/>
+                    and  Name like #{name}
+                </if>
+
+                <if test="conference.state != null and conference.state != ''">
+                    and State = #{conference.state}
+                </if>
+            </where>
+        </if>
+    </select>
+</mapper>

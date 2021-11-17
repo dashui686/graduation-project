@@ -8,9 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -18,30 +16,12 @@ import lombok.NoArgsConstructor;
  */
 @TableName(value ="tb_flow")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class TbFlow extends Model<TbFlow> implements Serializable {
     /**
      * id
      */
     @TableId(value = "Id", type = IdType.AUTO)
     private Integer id;
-
-    public TbFlow(String processInstanceId, String processInstanceDefinitionKey, String processInstanceDefinitionName, String taskId, String taskNaem, String createUserId, String createUserName, String assignee, String roles, String businessKey, Integer processState, String reason, LocalDateTime createDate) {
-        this.processInstanceId = processInstanceId;
-        this.processInstanceDefinitionKey = processInstanceDefinitionKey;
-        this.processInstanceDefinitionName = processInstanceDefinitionName;
-        this.taskId = taskId;
-        this.taskNaem = taskNaem;
-        this.createUserId = createUserId;
-        this.createUserName = createUserName;
-        this.assignee = assignee;
-        this.roles = roles;
-        this.businessKey = businessKey;
-        this.processState = processState;
-        this.reason = reason;
-        this.createDate = createDate;
-    }
 
     /**
      * 流程实例ID
@@ -121,6 +101,18 @@ public class TbFlow extends Model<TbFlow> implements Serializable {
     @TableField(value = "CreateDate")
     private LocalDateTime createDate;
 
+    /**
+     * 用户
+     */
+    @TableField(value = "CandidateUsers")
+    private String candidateUsers;
+
+    /**
+     * 组
+     */
+    @TableField(value = "CandidateGroups")
+    private String candidateGroups;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -149,7 +141,9 @@ public class TbFlow extends Model<TbFlow> implements Serializable {
             && (this.getBusinessKey() == null ? other.getBusinessKey() == null : this.getBusinessKey().equals(other.getBusinessKey()))
             && (this.getProcessState() == null ? other.getProcessState() == null : this.getProcessState().equals(other.getProcessState()))
             && (this.getReason() == null ? other.getReason() == null : this.getReason().equals(other.getReason()))
-            && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()));
+            && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
+            && (this.getCandidateUsers() == null ? other.getCandidateUsers() == null : this.getCandidateUsers().equals(other.getCandidateUsers()))
+            && (this.getCandidateGroups() == null ? other.getCandidateGroups() == null : this.getCandidateGroups().equals(other.getCandidateGroups()));
     }
 
     @Override
@@ -170,6 +164,8 @@ public class TbFlow extends Model<TbFlow> implements Serializable {
         result = prime * result + ((getProcessState() == null) ? 0 : getProcessState().hashCode());
         result = prime * result + ((getReason() == null) ? 0 : getReason().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
+        result = prime * result + ((getCandidateUsers() == null) ? 0 : getCandidateUsers().hashCode());
+        result = prime * result + ((getCandidateGroups() == null) ? 0 : getCandidateGroups().hashCode());
         return result;
     }
 
@@ -193,6 +189,8 @@ public class TbFlow extends Model<TbFlow> implements Serializable {
         sb.append(", processState=").append(processState);
         sb.append(", reason=").append(reason);
         sb.append(", createDate=").append(createDate);
+        sb.append(", candidateUsers=").append(candidateUsers);
+        sb.append(", candidateGroups=").append(candidateGroups);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
