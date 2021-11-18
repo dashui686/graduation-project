@@ -74,7 +74,6 @@ public class SysUserController extends BaseController
     /**
      * 获取用户列表
      */
-    @PreAuthorize("@ss.hasPermi('system:user:listByOption')")
     @GetMapping("/listByOption")
     public AjaxResult listByOption(SysUser user)
     {

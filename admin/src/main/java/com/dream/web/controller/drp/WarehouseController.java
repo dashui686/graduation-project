@@ -57,5 +57,9 @@ public class WarehouseController {
         return drpWarehouseService.edit(drpWarehouse);
     }
 
+    @GetMapping("/queryAll")
+    public List<DrpWarehouse> queryAll(){
+       return drpWarehouseService.queryAll();
+    }
 
 }

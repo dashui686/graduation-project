@@ -66,7 +66,7 @@ public class ProcessCommonController {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         System.out.println(pageDomain);
         Page<TbFlow> page = new Page<>(pageDomain.getPageNum(), pageDomain.getPageSize());
-        QueryWrapper<TbFlow> createUserId1 = new QueryWrapper<TbFlow>().eq("Assignee", SecurityUtils.getUserId());
+        QueryWrapper<TbFlow> createUserId1 = new QueryWrapper<TbFlow>().eq("Assignee", SecurityUtils.getUserId()).or().eq("CandidateGroups",SecurityUtils.getDeptId());
         Page<TbFlow> createUserId = tbFlowService.page(page, createUserId1);
         return AjaxResult.success(createUserId);
     }

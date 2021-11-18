@@ -9,7 +9,7 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>   
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { getMyProcess } from "@/api/process/process.js";
+import { getMyProcess } from "@/api/process/process";
 import AppLink from '../../layout/components/Sidebar/Link.vue'
 
 export default {
@@ -60,7 +60,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 岗位表格数据
+      // 表格数据
       postList: [],
       // 查询参数
       queryParams: {
@@ -86,7 +86,6 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询岗位列表 */
     getList() {
       this.loading = true;
       getMyProcess(this.queryParams).then(res =>{

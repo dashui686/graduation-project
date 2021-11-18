@@ -28,7 +28,7 @@ export function getWarehouse(warehouseId) {
 }
 
 
-// 新增岗位
+// 新增仓库
 export function addWarehouse(data) {
   return request({
     url: '/test/drpWarehouse/',
@@ -70,6 +70,14 @@ export function unDeploy(postId) {
     url: '/test/processDeploy/unDeploy',
     method: 'post',
     data: {processId:postId}
+  })
+}
+
+// 查询所有 参数
+export function queryAll() {
+  return request({
+    url: '/test/drpWarehouse/queryAll',
+    method: 'get',
   })
 }
 

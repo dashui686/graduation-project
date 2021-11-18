@@ -11,7 +11,9 @@ import com.dream.drp.mapper.DrpWarehouseMapper;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,10 @@ import java.time.LocalDateTime;
 @Service
 public class DrpWarehouseServiceImpl extends ServiceImpl<DrpWarehouseMapper, DrpWarehouse>
     implements DrpWarehouseService{
+
+
+    @Resource
+    DrpWarehouseMapper drpWarehouseMapper;
 
     @Override
     public AjaxResult select(DrpWarehouse drpWarehouse, Integer current, Integer size) {
@@ -57,6 +63,11 @@ public class DrpWarehouseServiceImpl extends ServiceImpl<DrpWarehouseMapper, Drp
     @Override
     public AjaxResult removeIds(Long[] id) {
         return AjaxResult.success(removeByIds(Collections.arrayToList(id)));
+    }
+
+    @Override
+    public List<DrpWarehouse> queryAll() {
+        return drpWarehouseMapper.queryAll();
     }
 }
 

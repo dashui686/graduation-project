@@ -17,4 +17,8 @@
         WarehouseId,WarehouseName,WarehouseDesc,
         Sort,CreateDate,UpdateDate
     </sql>
+
+    <select id="queryAll" resultType="drpWarehouse" parameterType="drpWarehouse">
+        select * from drp_warehouse
+    </select>
 </mapper>

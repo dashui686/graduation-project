@@ -1,9 +1,9 @@
 package com.dream.drp.service;
 
 import com.dream.common.core.domain.AjaxResult;
-import com.dream.drp.domain.DrpGoods;
 import com.dream.drp.domain.DrpWarehouse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
 
 /**
  *
@@ -45,4 +45,6 @@ public interface DrpWarehouseService extends IService<DrpWarehouse> {
      * @return
      */
     public AjaxResult removeIds(Long[] id);
+
+    public List<DrpWarehouse> queryAll();
 }
