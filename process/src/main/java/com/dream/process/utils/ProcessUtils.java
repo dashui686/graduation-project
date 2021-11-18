@@ -72,7 +72,7 @@ public class ProcessUtils {
         try {
             Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
             Authentication.setAuthenticatedUserId(SecurityUtils.getUserId().toString());
-            taskService.addComment(taskId,task.getProcessInstanceId(),reason);
+            taskService.addComment(taskId,task.getProcessInstanceId(),reason.isEmpty()||reason==null ?"无理由":reason);
             taskService.complete(task.getId(),data);
             return true;
         } catch (Exception e) {

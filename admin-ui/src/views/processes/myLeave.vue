@@ -144,14 +144,12 @@ export default {
     this.getOption();
     console.log(this.$route)
     this.$nextTick(()=>{
-
       let aa = this.$route.query.bskey;
       if(aa ==undefined){
         this.getBusi(this.$route.params.id);
       }else{
         this.getBusiness(aa);
       }
-
     });
     
   },
@@ -165,6 +163,8 @@ export default {
           this.toLastView(visitedViews, view)
         }
       })
+
+
       // const tags = this.$refs.tag
       // this.$nextTick(() => {
       //   for (const tag of tags) {
@@ -178,6 +178,9 @@ export default {
       //     }
       //   }
       // })
+
+
+
     },
     getBusiness(id){
         getById(id).then(response => {
@@ -230,7 +233,7 @@ export default {
       console.log(this)
       this.$refs['leaveForm'].validate(valid => {
         if (!valid) return
-        if (this.leaveFormData.duration <=0 ) return
+        if (this.leaveFormData.duration <= 0 ) return
         // TODO 提交表单
         addLeave(this.leaveFormData).then(res=>{
            this.$modal.msgSuccess("申请成功");

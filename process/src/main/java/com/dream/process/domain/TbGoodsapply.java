@@ -15,11 +15,14 @@ import lombok.Data;
 @TableName(value ="tb_goodsapply")
 @Data
 public class TbGoodsapply implements Serializable {
+
+
     /**
      * 自增列
      */
     @TableId(value = "Id", type = IdType.AUTO)
     private Integer id;
+
 
     /**
      * 商品ID
@@ -27,11 +30,13 @@ public class TbGoodsapply implements Serializable {
     @TableField(value = "GoodsId")
     private Integer goodsId;
 
+
     /**
      * 仓库ID
      */
     @TableField(value = "WarehouseId")
     private Integer warehouseId;
+
 
     /**
      * 数量
@@ -39,17 +44,30 @@ public class TbGoodsapply implements Serializable {
     @TableField(value = "Count")
     private Integer count;
 
+
     /**
      * 创建人
      */
     @TableField(value = "CreateUser")
     private Integer createUser;
 
+
     /**
      * 创建时间
      */
     @TableField(value = "CreateDate")
     private LocalDateTime createDate;
+
+    /**
+     *
+     */
+    @TableField(value = "Reason")
+    private String reason;
+
+
+
+    @TableField(exist = false)
+    private String assignee;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

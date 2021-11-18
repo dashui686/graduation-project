@@ -9,12 +9,13 @@
             <result property="goodsId" column="GoodsId" jdbcType="INTEGER"/>
             <result property="warehouseId" column="WarehouseId" jdbcType="INTEGER"/>
             <result property="count" column="Count" jdbcType="INTEGER"/>
+            <result property="reason" column="Reason" jdbcType="NVARCHAR"/>
             <result property="createUser" column="CreateUser" jdbcType="INTEGER"/>
             <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        Id,GoodsId,WarehouseId,
+        Id,GoodsId,WarehouseId,Reason,
         Count,CreateUser,CreateDate
     </sql>
 </mapper>
