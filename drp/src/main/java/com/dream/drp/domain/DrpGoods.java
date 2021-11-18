@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @TableName(value ="drp_goods")
 @Data
-public class DrpGoods implements Serializable {
+public class DrpGoods extends Model<DrpGoods> implements Serializable {
     /**
      * 商品ID
      */

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dream.common.core.domain.AjaxResult;
 import com.dream.common.core.domain.model.LoginUser;
 import com.dream.common.utils.SecurityUtils;
+import com.dream.drp.domain.DrpGoods;
+import com.dream.drp.service.DrpGoodsService;
 import com.dream.process.domain.PleaseLeave;
 import com.dream.process.domain.TbFlow;
 import com.dream.process.domain.TbGoodsapply;
@@ -43,6 +45,14 @@ public class TbGoodsapplyServiceImpl extends ServiceImpl<TbGoodsapplyMapper, TbG
 
     @Autowired
     TbFlowService tbFlowService;
+
+    @Autowired
+    DrpGoodsService drpGoodsService;
+
+    @Autowired
+    TbGoodsapplyService tbGoodsapplyService;
+
+
 
     @Override
     @Transactional
@@ -107,6 +117,13 @@ public class TbGoodsapplyServiceImpl extends ServiceImpl<TbGoodsapplyMapper, TbG
                 one.setTaskId("0");
                 one.setTaskNaem("完成");
                 one.setReason(processApproveVo.getApproveReason());
+
+                String businessKey = one.getBusinessKey();
+                TbGoodsapply byId = tbGoodsapplyService.getById(businessKey);
+                DrpGoods byId1 = drpGoodsService.getById(byId.getGoodsId());
+                byId1.setGoodsCount(byId1.getGoodsCount() - byId.getCount());
+                boolean b1 = byId1.updateById();
+
             }else{
                 one.setAssignee(processApproveVo.getAssignee());
                 one.setTaskId(task.getId());

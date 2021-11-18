@@ -21,6 +21,10 @@
             <groupId>com.dream</groupId>
             <artifactId>common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dream</groupId>
+            <artifactId>drp</artifactId>
+        </dependency>
         <!--        mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
