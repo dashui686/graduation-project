@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dream.process.mapper.TbGoodsapplyMapper">
+
+    <resultMap id="BaseResultMap" type="com.dream.process.domain.TbGoodsapply">
+            <id property="id" column="Id" jdbcType="INTEGER"/>
+            <result property="goodsId" column="GoodsId" jdbcType="INTEGER"/>
+            <result property="warehouseId" column="WarehouseId" jdbcType="INTEGER"/>
+            <result property="count" column="Count" jdbcType="INTEGER"/>
+            <result property="createUser" column="CreateUser" jdbcType="INTEGER"/>
+            <result property="createDate" column="CreateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Id,GoodsId,WarehouseId,
+        Count,CreateUser,CreateDate
+    </sql>
+</mapper>
