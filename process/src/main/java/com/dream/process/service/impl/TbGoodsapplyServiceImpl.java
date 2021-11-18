@@ -101,6 +101,7 @@ public class TbGoodsapplyServiceImpl extends ServiceImpl<TbGoodsapplyMapper, TbG
     }
 
     @Override
+    @Transactional
     public AjaxResult approvePleaseLeave(ProcessApproveVo processApproveVo) {
         TbFlow one = tbFlowService.getOne(new QueryWrapper<TbFlow>().eq("ProcessInstanceId", processApproveVo.getProcessInstanceId()).eq("TaskId", processApproveVo.getTaskId()));
         Task task1 = taskService.createTaskQuery().taskId(processApproveVo.getTaskId()).singleResult();
@@ -121,7 +122,11 @@ public class TbGoodsapplyServiceImpl extends ServiceImpl<TbGoodsapplyMapper, TbG
                 String businessKey = one.getBusinessKey();
                 TbGoodsapply byId = tbGoodsapplyService.getById(businessKey);
                 DrpGoods byId1 = drpGoodsService.getById(byId.getGoodsId());
-                byId1.setGoodsCount(byId1.getGoodsCount() - byId.getCount());
+                int goodsCount = byId1.getGoodsCount() - byId.getCount();
+                if(goodsCount <0){
+                    return AjaxResult.error("商品数量不足");
+                }
+                byId1.setGoodsCount(goodsCount);
                 boolean b1 = byId1.updateById();
 
             }else{
