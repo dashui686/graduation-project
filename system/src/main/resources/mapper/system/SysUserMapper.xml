@@ -227,11 +227,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<where>
 				<if test="user.nickName!='' and user.nickName!=null">
 					<bind name="aa" value="'%'+user.nickName+'%'"/>
-					nick_Name like #{aa}
+					and nick_Name like #{aa}
 				</if>
 				<if test="user.phonenumber!='' and user.phonenumber!=null">
 					<bind name="phone" value="'%'+user.phonenumber+'%'"/>
-					phonenumber like #{phone}
+					and phonenumber like #{phone}
 				</if>
 			</where>
 		</if>
