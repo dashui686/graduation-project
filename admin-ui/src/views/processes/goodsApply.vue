@@ -28,7 +28,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item size="large" v-if="!this.Approve">
+      <el-form-item size="large"  v-if="!this.isApprove">
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
       </el-form-item>
@@ -133,6 +133,8 @@ export default {
       let aa = this.$route.query.bskey;
       if(aa ==undefined){
         this.getBusi(this.$route.params.id);
+      console.log(this.$route)
+
       }else{
         this.getBusiness(aa);
       }
@@ -163,6 +165,7 @@ export default {
     },
 
     getBusiness(id){
+       if(id == 0) return ;
         getById(id).then(response => {
           this.goodsFormData = response.data;
           this.isApprove = true;
